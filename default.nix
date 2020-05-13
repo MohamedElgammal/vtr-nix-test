@@ -185,7 +185,7 @@ rec {
     variant = "directed_moves";
     url = "ssh://git@github.com/MohamedElgammal/directed_moves.git";
     ref = "directed_moves";
-    rev = "d5e85c1f37cb1d2675a9c63230b72bf6e85ab487";
+    rev = "68cadcbfd6b98a13363556418e4e99823d63f193";
   };
 
   directed_moves_sweep =
