@@ -169,7 +169,7 @@ rec {
       tests = {
         custom = {
           task = "mohameds_test/custom";
-          qor_parse_file = "qor_standard.txt";
+          qor_parse_file = "qor_large.txt";
           pass_requirements_file = "pass_requirements.txt";
           arch_list = ["k6_frac_N10_frac_chain_mem32K_40nm.xml"];
           circuit_list = ["bgm.v" "LU8PEEng.v" "LU32PEEng.v" "mcml.v" "stereovision0.v" "stereovision1.v" "stereovision2.v"];
@@ -190,7 +190,7 @@ rec {
 
   directed_moves_sweep =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--simpleRL_agent_placement on ${flags_to_string flags}";
+          flags = "--simpleRL_agent_placement on --pack --place ${flags_to_string flags}";
           vtr = vtr_directed_moves;
         }).custom;
     in
