@@ -208,7 +208,7 @@ directed_moves_static =
         }).custom;
     in
       flag_sweep "directed_moves_sweep" test {
-        place_static_move_prob = [{100,0,0,0,0,0} {10,10,10,10,10,10}];
+        place_static_move_prob = ["{100,0,0,0,0,0}" "{10,10,10,10,10,10}"];
         inner_num = [0.125 0.25 0.5 1 2];
         seed = range 1 5;
       };
