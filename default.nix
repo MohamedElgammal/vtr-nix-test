@@ -188,6 +188,13 @@ rec {
     rev = "68cadcbfd6b98a13363556418e4e99823d63f193";
   };
 
+  vtr_7_moves = vtrDerivation {
+    variant = "centroid_move";
+    url = "ssh://git@github.com/MohamedElgammal/directed_moves.git";
+    ref = "centroid_move";
+    rev = "d5e85c1f37cb1d2675a9c63230b72bf6e85ab487";
+  };
+  
   directed_moves_sweep =
     let test = { flags, ...}: (mohameds_test {
           flags = "--simpleRL_agent_placement on --pack --place ${flags_to_string flags}";
@@ -197,6 +204,19 @@ rec {
       flag_sweep "directed_moves_sweep" test {
         place_agent_gamma = [0.0005 0.001 0.005 0.01 0.05 0.1 0.5];
         place_agent_epsilon = [0.05 0.1 0.2 0.3 0.4 0.5 0.9];
+        inner_num = [0.125 0.25 0.5 1 2];
+        seed = range 1 5;
+      };
+  
+  centroid_move_sweep =
+    let test = { flags, ...}: (mohameds_test {
+          flags = "--simpleRL_agent_placement on --pack --place ${flags_to_string flags}";
+          vtr = vtr_7_moves;
+        }).custom;
+    in
+      flag_sweep "directed_moves_sweep" test {
+        place_agent_gamma = [0.001 0.01 ];
+        place_agent_epsilon = [0.1 0.3 0.5];
         inner_num = [0.125 0.25 0.5 1 2];
         seed = range 1 5;
       };
