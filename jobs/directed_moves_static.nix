@@ -4,5 +4,5 @@ with import ../default.nix { pkgs = import <nixpkgs> {}; }; # import default.nix
 
 # each attribute is a job
 {
-  directed_moves_static = directed_moves_static.summary;
+  Equi_prob = Equi_prob.summary;
 }
