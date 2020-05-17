@@ -198,7 +198,7 @@ rec {
   vtr_rlim = vtrDerivation {
     variant = "rlim_option";
     url = "ssh://git@github.com/MohamedElgammal/directed_moves.git";
-    ref = "rlim_option";
+    ref = "centroid_move";
     rev = "3d484f448a73f4f9c37f08e7f0cade0782874450";
   };
   
