@@ -199,7 +199,7 @@ rec {
     variant = "rlim_optio";
     url = "ssh://git@github.com/MohamedElgammal/directed_moves.git";
     ref = "rlim_optio";
-    rev = "f0c779f6780118ecec4778f480fddd50609ae46c";
+    rev = "7a84fd9dda8bafc5a8e35528c7fc1d2053c76cee";
   };
   
   directed_moves_sweep =
