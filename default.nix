@@ -194,11 +194,11 @@ rec {
     ref = "centroid_move";
     rev = "d5e85c1f37cb1d2675a9c63230b72bf6e85ab487";
   };
-  
+ 
   vtr_rlim = vtrDerivation {
-    variant = "rlim_option";
+    variant = "rlim_sweep";
     url = "ssh://git@github.com/MohamedElgammal/directed_moves.git";
-    ref = "centroid_move";
+    ref = "rlim_sweep";
     rev = "3d484f448a73f4f9c37f08e7f0cade0782874450";
   };
   
@@ -221,7 +221,7 @@ rec {
           vtr = vtr_7_moves;
         }).custom;
     in
-      flag_sweep "directed_moves_sweep" test {
+      flag_sweep "centroid_move_sweep" test {
         place_agent_gamma = [0.001 0.01 ];
         place_agent_epsilon = [0.1 0.3 0.5];
         inner_num = [0.125 0.25 0.5 1 2];
@@ -234,7 +234,7 @@ VPR8 =
           vtr = vtr_directed_moves;
         }).custom;
     in
-      flag_sweep "directed_moves_sweep" test {
+      flag_sweep "VPR8" test {
         inner_num = [0.125 0.25 0.5 1 2];
         seed = range 1 5;
       };
@@ -245,7 +245,7 @@ Equi_prob =
           vtr = vtr_7_moves;
         }).custom;
     in
-      flag_sweep "directed_moves_sweep" test {
+      flag_sweep "Equi_prob" test {
         inner_num = [0.125 0.25 0.5 1 2];
         seed = range 1 5;
       };      
@@ -256,7 +256,7 @@ rlim =
           vtr = vtr_rlim;
         }).custom;
     in
-      flag_sweep "directed_moves_sweep" test {
+      flag_sweep "rlim" test {
         inner_num = [0.125 0.25 0.5 1 2];
         seed = range 1 5;
         place_dm_rlim = [0 1 2 3 5 7];
