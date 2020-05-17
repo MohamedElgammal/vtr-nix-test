@@ -195,6 +195,13 @@ rec {
     rev = "d5e85c1f37cb1d2675a9c63230b72bf6e85ab487";
   };
   
+  vtr_rlim = vtrDerivation {
+    variant = "rlim_option";
+    url = "ssh://git@github.com/MohamedElgammal/directed_moves.git";
+    ref = "rlim_option";
+    rev = "3d484f448a73f4f9c37f08e7f0cade0782874450";
+  };
+  
   directed_moves_sweep =
     let test = { flags, ...}: (mohameds_test {
           flags = "--simpleRL_agent_placement on --pack --place ${flags_to_string flags}";
@@ -241,6 +248,18 @@ Equi_prob =
       flag_sweep "directed_moves_sweep" test {
         inner_num = [0.125 0.25 0.5 1 2];
         seed = range 1 5;
+      };      
+
+rlim =
+    let test = { flags, ...}: (mohameds_test {
+          flags = "--simpleRL_agent_placement on --pack --place --place_agent_epsilon 0.5 --place_agent_gamma 0.01  ${flags_to_string flags}";
+          vtr = vtr_rlim;
+        }).custom;
+    in
+      flag_sweep "directed_moves_sweep" test {
+        inner_num = [0.125 0.25 0.5 1 2];
+        seed = range 1 5;
+        place_dm_rlim = [0 1 2 3 5 7];
       };      
 
 }
