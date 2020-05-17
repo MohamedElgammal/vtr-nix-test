@@ -194,13 +194,6 @@ rec {
     ref = "centroid_move";
     rev = "d5e85c1f37cb1d2675a9c63230b72bf6e85ab487";
   };
-  
-  vtr_rlim_moves = vtrDerivation {
-    variant = "rlim_option";
-    url = "ssh://git@github.com/MohamedElgammal/directed_moves.git";
-    ref = "rlim_option";
-    rev = "7a84fd9dda8bafc5a8e35528c7fc1d2053c76cee";
-  };
 
   vtr_rlim_moves = vtrDerivation {
     variant = "rlim_option";
