@@ -196,9 +196,9 @@ rec {
   };
  
   vtr_rlim = vtrDerivation {
-    variant = "rlim_option";
+    variant = "rlim_optio";
     url = "ssh://git@github.com/MohamedElgammal/directed_moves.git";
-    ref = "rlim_option";
+    ref = "rlim_optio";
     rev = "f0c779f6780118ecec4778f480fddd50609ae46c";
   };
   
