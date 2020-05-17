@@ -201,6 +201,13 @@ rec {
     ref = "rlim_option";
     rev = "7a84fd9dda8bafc5a8e35528c7fc1d2053c76cee";
   };
+
+  vtr_rlim_moves = vtrDerivation {
+    variant = "rlim_option";
+    url = "https://github.com/MohamedElgammal/directed_run.git";
+    ref = "directed_moves";
+    rev = "7a84fd9dda8bafc5a8e35528c7fc1d2053c76cee";
+  };
  
   directed_moves_sweep =
     let test = { flags, ...}: (mohameds_test {
