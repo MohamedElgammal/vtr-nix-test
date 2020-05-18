@@ -268,9 +268,7 @@ rlim =
         seed = range 1 5;
         place_dm_rlim = [0 1 2 3 5 7];
       };      
-
-}
-
+      
 reward_limits =
     let test = { flags, ...}: (mohameds_test {
           flags = "--simpleRL_agent_placement on --pack --place --place_agent_epsilon 0.5 --place_agent_gamma 0.01  ${flags_to_string flags}";
