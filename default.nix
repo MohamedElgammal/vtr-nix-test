@@ -206,7 +206,7 @@ rec {
     variant = "limit_options";
     url = "https://github.com/MohamedElgammal/directed_run.git";
     ref = "directed_moves";
-    rev = "9f534b8a572e737b6fabf19d1684ee8f12b35803";
+    rev = "89299be62d88761c8366149103e686900aef97ee";
   };
   
   directed_moves_sweep =
