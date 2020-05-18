@@ -281,6 +281,44 @@ reward_limits =
         place_hi_limit = [0.7 0.8 0.9];
         place_low_limit = [0.1 0.2 0.3];
         place_decay_factor = [0.001 0.005 0.01];
-      };      
+      };    
+      
+      
+titan_sweep =
+    let test = {flags, ...}:
+          (make_regression_tests {
+            vtr = vtr_reward_limit;
+            flags = "--simpleRL_agent_placement on --pack --place --place_hi_limit 0.8 --place_low_limit 0.2 --place_decay_factor 0.005 --place_agent_epsilon 0.5 --place_agent_gamma 0.01  ${flags_to_string flags}";
+          }).vtr_reg_weekly.vtr_reg_titan.all;
+    in
+      flag_sweep "titan_sweep" test {
+        inner_num = [0.125 0.25 0.5 1.0 2.0];
+        seed = range 1 3;
+    };
+    
+titan_vpr =
+    let test = {flags, ...}:
+          (make_regression_tests {
+            vtr = vtr_reward_limit;
+            flags = "--simpleRL_agent_placement off --pack --place   ${flags_to_string flags}";
+          }).vtr_reg_weekly.vtr_reg_titan.all;
+    in
+      flag_sweep "titan_vpr" test {
+        inner_num = [0.125 0.25 0.5 1.0 2.0];
+        seed = range 1 3;
+    };
+    
+titan_equal =
+    let test = {flags, ...}:
+          (make_regression_tests {
+            vtr = vtr_reward_limit;
+            flags = "--simpleRL_agent_placement off --place_static_move_prob {10,10,10,10,10,10,10} --pack --place   ${flags_to_string flags}";
+          }).vtr_reg_weekly.vtr_reg_titan.all;
+    in
+      flag_sweep "titan_equal" test {
+        inner_num = [0.125 0.25 0.5 1.0 2.0];
+        seed = range 1 3;
+    };
 
 }
+
