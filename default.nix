@@ -202,6 +202,13 @@ rec {
     rev = "7a84fd9dda8bafc5a8e35528c7fc1d2053c76cee";
   };
  
+  vtr_reward_limit = vtrDerivation {
+    variant = "limit_options";
+    url = "https://github.com/MohamedElgammal/directed_run.git";
+    ref = "directed_moves";
+    rev = "9f534b8a572e737b6fabf19d1684ee8f12b35803";
+  };
+  
   directed_moves_sweep =
     let test = { flags, ...}: (mohameds_test {
           flags = "--simpleRL_agent_placement on --pack --place ${flags_to_string flags}";
@@ -260,6 +267,22 @@ rlim =
         inner_num = [0.125 0.25 0.5 1 2];
         seed = range 1 5;
         place_dm_rlim = [0 1 2 3 5 7];
+      };      
+
+}
+
+reward_limits =
+    let test = { flags, ...}: (mohameds_test {
+          flags = "--simpleRL_agent_placement on --pack --place --place_agent_epsilon 0.5 --place_agent_gamma 0.01  ${flags_to_string flags}";
+          vtr = vtr_reward_limit;
+        }).custom;
+    in
+      flag_sweep "rlim" test {
+        inner_num = [0.125 0.25 0.5 1 2];
+        seed = range 1 3;
+        place_hi_limit = [0.7 0.8 0.9];
+        place_low_limit = [0.1 0.2 0.3];
+        place_decay_factor = [0.001 0.005 0.01];
       };      
 
 }
