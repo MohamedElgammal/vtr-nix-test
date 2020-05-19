@@ -191,7 +191,7 @@ rec {
   vtr_7_moves = vtrDerivation {
     variant = "centroid_move";
     url = "https://github.com/MohamedElgammal/directed_run.git";
-    ref = "centroid_move";
+    ref = "directed_moves";
     rev = "c082339f0f439b6901d697588e9cc680608e1752";
   };
 
