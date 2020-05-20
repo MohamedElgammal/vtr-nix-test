@@ -236,7 +236,7 @@ rec {
 
 VPR8 =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--simpleRL_agent_placement off --pack --place --place_static_move_prob {100,0,0,0,0,0} ${flags_to_string flags}";
+          flags = "--simpleRL_agent_placement off --pack --place --place_static_move_prob {100,0,0,0,0,0,0} ${flags_to_string flags}";
           vtr = vtr_7_moves;
         }).custom;
     in
