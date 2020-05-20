@@ -196,6 +196,14 @@ rec {
     rev = "120eb4f6045657f20b9d1f5887ec3886125aa407";
   };
 
+  vtr_softmax = vtrDerivation {
+    variant = "softmax";
+    url = "https://github.com/MohamedElgammal/directed_run.git";
+    ref = "directed_moves";
+    rev = "c082339f0f439b6901d697588e9cc680608e1752";
+  };
+
+
   vtr_rlim_moves = vtrDerivation {
     variant = "rlim_option";
     url = "https://github.com/MohamedElgammal/directed_run.git";
@@ -232,6 +240,18 @@ rec {
       flag_sweep "centroid_move_sweep" test {
         #place_agent_gamma = [0.0001 0.001 0.005 0.01 0.05 0.1 0.5];
         place_agent_epsilon = [0.1 0.3 0.5];
+        inner_num = [0.05 0.1 0.125 0.25 0.5 1 2];
+        seed = range 1 3;
+      };
+
+
+  centroid_move2_sweep =
+    let test = { flags, ...}: (mohameds_test {
+          flags = "--simpleRL_agent_placement on --pack --place --place_agent_gamma 0.05 ${flags_to_string flags}";
+          vtr = vtr_7_moves;
+        }).custom;
+    in
+      flag_sweep "centroid_move2_sweep" test {
         inner_num = [0.05 0.1 0.125 0.25 0.5 1 2];
         seed = range 1 3;
       };
