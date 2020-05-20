@@ -253,7 +253,7 @@ Equi_prob =
     in
       flag_sweep "Equi_prob" test {
         inner_num = [0.125 0.25 0.5 1 2];
-        seed = range 1 5;
+        seed = range 1 3;
       };      
 
 rlim =
