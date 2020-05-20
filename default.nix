@@ -192,7 +192,7 @@ rec {
     variant = "centroid_move";
     url = "https://github.com/MohamedElgammal/directed_run.git";
     ref = "directed_moves";
-    rev = "120eb4f6045657f20b9d1f5887ec3886125aa407";
+    rev = "d5e85c1f37cb1d2675a9c63230b72bf6e85ab487";
   };
 
   vtr_softmax = vtrDerivation {
@@ -232,12 +232,12 @@ rec {
   
   centroid_move_sweep =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--simpleRL_agent_placement on --pack --place --place_agent_gamma 0.05 --place_agent_epsilon 0.1 ${flags_to_string flags}";
-          vtr = vtr_7_moves;
+          flags = "--simpleRL_agent_placement on --pack --place --place_agent_gamma 0.05 ${flags_to_string flags}";
+          vtr = vtr_directed_moves;
         }).custom;
     in
       flag_sweep "centroid_move_sweep" test {
-        inner_num = [0.05 0.1 0.125 0.25 0.5 1 2];
+        inner_num = [0.125 0.25 0.5 1 2];
         seed = range 1 3;
       };
 
@@ -245,11 +245,11 @@ rec {
   centroid_move_sweep2 =
     let test = { flags, ...}: (mohameds_test {
           flags = "--simpleRL_agent_placement on --pack --place --place_agent_gamma 0.05 ${flags_to_string flags}";
-          vtr = vtr_softmax;
+          vtr = vtr_7_moves;
         }).custom;
     in
-      flag_sweep "centroid_move2_sweep" test {
-        inner_num = [0.05 0.1 0.125 0.25 0.5 1 2];
+      flag_sweep "centroid_move_sweep2" test {
+        inner_num = [0.125 0.25 0.5 1 2];
         seed = range 1 3;
       };
 
