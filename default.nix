@@ -200,7 +200,8 @@ rec {
     variant = "softmax";
     url = "https://github.com/MohamedElgammal/directed_run.git";
     ref = "directed_moves";
-    rev = "c082339f0f439b6901d697588e9cc680608e1752";
+    #rev = "c082339f0f439b6901d697588e9cc680608e1752";
+    rev = "349d867d1930106867102bbeeccbe21f954c53a7"
   };
 
 
