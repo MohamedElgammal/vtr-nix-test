@@ -245,10 +245,10 @@ rec {
       };
 
 
-  centroid_move2_sweep =
+  centroid_move_sweep2 =
     let test = { flags, ...}: (mohameds_test {
           flags = "--simpleRL_agent_placement on --pack --place --place_agent_gamma 0.05 ${flags_to_string flags}";
-          vtr = vtr_7_moves;
+          vtr = vtr_softmax;
         }).custom;
     in
       flag_sweep "centroid_move2_sweep" test {
