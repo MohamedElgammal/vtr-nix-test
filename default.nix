@@ -197,11 +197,17 @@ rec {
 
   vtr_softmax = vtrDerivation {
     variant = "softmax";
-    url = "https://github.com/MohamedElgammal/directed_run.git";
-    ref = "directed_moves";
-    rev = "c082339f0f439b6901d697588e9cc680608e1752";
+    url = "https://github.com/MohamedElgammal/exploration.git";
+    ref = "exploration";
+    rev = "9258e8d1e074307da87169f6e197bc5e099354e2";
   };
 
+  vtr_egreedy = vtrDerivation {
+    variant = "egreedy";
+    url = "https://github.com/MohamedElgammal/exploration.git";
+    ref = "exploration";
+    rev = "40c6734b109f92667d5e29aaef9c63e2dbd393ac";
+  };
 
   vtr_rlim_moves = vtrDerivation {
     variant = "rlim_option";
@@ -233,7 +239,7 @@ rec {
   centroid_move_sweep =
     let test = { flags, ...}: (mohameds_test {
           flags = "--simpleRL_agent_placement on --pack --place --place_agent_gamma 0.05 ${flags_to_string flags}";
-          vtr = vtr_directed_moves;
+          vtr = vtr_softmax;
         }).custom;
     in
       flag_sweep "centroid_move_sweep" test {
@@ -245,10 +251,11 @@ rec {
   centroid_move_sweep2 =
     let test = { flags, ...}: (mohameds_test {
           flags = "--simpleRL_agent_placement on --pack --place --place_agent_gamma 0.05 ${flags_to_string flags}";
-          vtr = vtr_7_moves;
+          vtr = vtr_egreedy;
         }).custom;
     in
       flag_sweep "centroid_move_sweep2" test {
+        place_agent_epsilon = [0.1 0.3 0.5];
         inner_num = [0.125 0.25 0.5 1 2];
         seed = range 1 3;
       };
