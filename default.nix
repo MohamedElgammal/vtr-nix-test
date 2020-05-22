@@ -244,7 +244,7 @@ rec {
         }).custom;
     in
       flag_sweep "centroid_move_sweep" test {
-        place_agent_gamma = [0.0001 0.01 0.05 0.1];
+        place_agent_gamma = [0.0001  0.001 0.01 0.05 0.1];
         inner_num = [0.125 0.25 0.5 1 2];
         seed = range 1 3;
       };
