@@ -206,7 +206,8 @@ rec {
     variant = "egreedy";
     url = "https://github.com/MohamedElgammal/exploration.git";
     ref = "exploration";
-    rev = "40c6734b109f92667d5e29aaef9c63e2dbd393ac";
+    #rev = "40c6734b109f92667d5e29aaef9c63e2dbd393ac";
+    rev = "39dd19cf6f410bd84caf2c5b187b3eafbdebf70f";
   };
 
   vtr_rlim_moves = vtrDerivation {
@@ -238,11 +239,12 @@ rec {
   
   centroid_move_sweep =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--simpleRL_agent_placement on --pack --place --place_agent_gamma 0.05 ${flags_to_string flags}";
+          flags = "--simpleRL_agent_placement on --pack --place ${flags_to_string flags}";
           vtr = vtr_softmax;
         }).custom;
     in
       flag_sweep "centroid_move_sweep" test {
+        place_agent_gamma = [0.0001 0.01 0.05 0.1];
         inner_num = [0.125 0.25 0.5 1 2];
         seed = range 1 3;
       };
@@ -250,12 +252,12 @@ rec {
 
   centroid_move_sweep2 =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--simpleRL_agent_placement on --pack --place --place_agent_gamma 0.05 ${flags_to_string flags}";
+          flags = "--simpleRL_agent_placement on --pack --place --place_agent_gamma 0.05  --place_agent_epsilon 0.5 ${flags_to_string flags}";
           vtr = vtr_egreedy;
         }).custom;
     in
       flag_sweep "centroid_move_sweep2" test {
-        place_agent_epsilon = [0.1 0.3 0.5];
+        place_dm_rlim = [1000 10 5 3 1];
         inner_num = [0.125 0.25 0.5 1 2];
         seed = range 1 3;
       };
