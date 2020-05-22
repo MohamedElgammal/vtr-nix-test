@@ -199,7 +199,7 @@ rec {
     variant = "softmax";
     url = "https://github.com/MohamedElgammal/exploration.git";
     ref = "exploration";
-    rev = "9258e8d1e074307da87169f6e197bc5e099354e2";
+    rev = "82814c1750d20195ecd67a429da87c8e9fbcfd9b";
   };
 
   vtr_egreedy = vtrDerivation {
@@ -239,12 +239,12 @@ rec {
   
   centroid_move_sweep =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--simpleRL_agent_placement on --pack --place ${flags_to_string flags}";
+          flags = "--simpleRL_agent_placement on --pack --place --place_agent_epsilon 0.3 --place_dm_rlim 3  --place_agent_algorithm e_greedy ${flags_to_string flags}";
           vtr = vtr_softmax;
         }).custom;
     in
       flag_sweep "centroid_move_sweep" test {
-        place_agent_gamma = [0.0001  0.001 0.01 0.05 0.1];
+        place_agent_gamma = [0.001 0.01 0.05];
         inner_num = [0.125 0.25 0.5 1 2];
         seed = range 1 3;
       };
@@ -252,12 +252,12 @@ rec {
 
   centroid_move_sweep2 =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--simpleRL_agent_placement on --pack --place --place_agent_gamma 0.05  --place_agent_epsilon 0.5 ${flags_to_string flags}";
-          vtr = vtr_egreedy;
+          flags = "--simpleRL_agent_placement on --pack --place --place_dm_rlim 3  --place_agent_algorithm softmax ${flags_to_string flags}";
+          vtr = vtr_softmax;
         }).custom;
     in
       flag_sweep "centroid_move_sweep2" test {
-        place_dm_rlim = [1000 10 5 3 1];
+        place_agent_gamma = [0.001 0.01 0.05];
         inner_num = [0.125 0.25 0.5 1 2];
         seed = range 1 3;
       };
