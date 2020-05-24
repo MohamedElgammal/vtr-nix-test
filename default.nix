@@ -314,9 +314,9 @@ reward_limits =
 titan_sweep =
     let test = {flags, ...}:
           (make_regression_tests {
-            vtr = vtr_7_moves;
-            flags = "--simpleRL_agent_placement on --pack --place --place_agent_epsilon 0.5 --place_agent_gamma 0.01  ${flags_to_string flags}";
-          }).vtr_reg_weekly.vtr_reg_titan.all;
+            vtr = vtr_softmax;
+            flags = "--simpleRL_agent_placement on --pack --place --place_agent_epsilon 0.3 --place_dm_rlim 3  --place_agent_algorithm e_greedy ${flags_to_string flags}";
+          }).vtr_reg_nightly.titan_quick_qor.stratixiv_arch.sparcT1_core_stratixiv_arch_timing.common;
     in
       flag_sweep "titan_sweep" test {
         inner_num = [0.125 0.25 0.5 1.0 2.0];
@@ -326,9 +326,9 @@ titan_sweep =
 titan_vpr =
     let test = {flags, ...}:
           (make_regression_tests {
-            vtr = vtr_7_moves;
-            flags = "--simpleRL_agent_placement off --pack --place   ${flags_to_string flags}";
-          }).vtr_reg_weekly.vtr_reg_titan.all;
+            vtr = vtr_softmax;
+            flags = "--simpleRL_agent_placement off --pack --place ${flags_to_string flags}";
+          }).vtr_reg_nightly.titan_quick_qor.stratixiv_arch.sparcT1_core_stratixiv_arch_timing.common;
     in
       flag_sweep "titan_vpr" test {
         inner_num = [0.125 0.25 0.5 1.0 2.0];
@@ -338,7 +338,7 @@ titan_vpr =
 titan_equal =
     let test = {flags, ...}:
           (make_regression_tests {
-            vtr = vtr_7_moves;
+            vtr = vtr_softmax;
             flags = "--simpleRL_agent_placement off --place_static_move_prob {10,10,10,10,10,10,10} --pack --place   ${flags_to_string flags}";
           }).vtr_reg_weekly.vtr_reg_titan.all;
     in
