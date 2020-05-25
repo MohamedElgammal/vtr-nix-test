@@ -171,7 +171,7 @@ rec {
           task = "mohameds_test/custom";
           qor_parse_file = "qor_large.txt";
           pass_requirements_file = "pass_requirements.txt";
-          arch_list = ["k6_frac_N1_frac_chain_mem32K_40nm.xml"];
+          arch_list = ["k6_frac_N10_frac_chain_mem32K_40nm.xml"];
           circuit_list = ["bgm.v" "LU8PEEng.v" "LU32PEEng.v" "mcml.v"  "stereovision0.v" "stereovision1.v" "stereovision2.v"];
           archs_dir = "arch/timing";
           circuits_dir = "benchmarks/verilog";
@@ -199,7 +199,7 @@ rec {
     variant = "softmax";
     url = "https://github.com/MohamedElgammal/exploration.git";
     ref = "exploration";
-    rev = "82814c1750d20195ecd67a429da87c8e9fbcfd9b";
+    rev = "e37ba13b331c9102d509b2665338c4ad38c3ea37";
   };
 
   vtr_egreedy = vtrDerivation {
@@ -239,12 +239,11 @@ rec {
   
   centroid_move_sweep =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--simpleRL_agent_placement on --pack --place --place_agent_epsilon 0.3 --place_dm_rlim 3  --place_agent_algorithm e_greedy ${flags_to_string flags}";
+          flags = "--simpleRL_agent_placement on --pack --place --place_agent_gamma 0.05 --place_agent_epsilon 0.3 --place_dm_rlim 3  --place_agent_algorithm e_greedy ${flags_to_string flags}";
           vtr = vtr_softmax;
         }).custom;
     in
       flag_sweep "centroid_move_sweep" test {
-        place_agent_gamma = [0.001 0.01 0.05];
         inner_num = [0.125 0.25 0.5 1 2];
         seed = range 1 3;
       };
@@ -252,12 +251,11 @@ rec {
 
   centroid_move_sweep2 =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--simpleRL_agent_placement on --pack --place --place_dm_rlim 3  --place_agent_algorithm softmax ${flags_to_string flags}";
+          flags = "--simpleRL_agent_placement on --pack --place --place_dm_rlim 3  --place_agent_gamma 0.05 --place_agent_algorithm softmax ${flags_to_string flags}";
           vtr = vtr_softmax;
         }).custom;
     in
       flag_sweep "centroid_move_sweep2" test {
-        place_agent_gamma = [0.001 0.01 0.05];
         inner_num = [0.125 0.25 0.5 1 2];
         seed = range 1 3;
       };
