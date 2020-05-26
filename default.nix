@@ -171,7 +171,7 @@ rec {
           task = "mohameds_test/custom";
           qor_parse_file = "qor_large.txt";
           pass_requirements_file = "pass_requirements.txt";
-          arch_list = ["k6_frac_N10_frac_chain_mem32K_40nm.xml"];
+          arch_list = ["k6_frac_N1_frac_chain_mem32K_40nm.xml"];
           circuit_list = ["bgm.v" "LU8PEEng.v" "LU32PEEng.v" "mcml.v"  "stereovision0.v" "stereovision1.v" "stereovision2.v"];
           archs_dir = "arch/timing";
           circuits_dir = "benchmarks/verilog";
