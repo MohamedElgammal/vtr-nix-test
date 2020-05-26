@@ -311,8 +311,8 @@ reward_limits =
 titan_sweep =
     let test = {flags, ...}:
           (make_regression_tests {
-            vtr = vtr_softmax;
-            flags = "--simpleRL_agent_placement on --pack --place --place_agent_gamma 0.05 --place_agent_epsilon 0.3 --place_dm_rlim 3  --place_agent_algorithm e_greedy ${flags_to_string flags}";
+            vtr = vtr_egreedy;
+            flags = "--simpleRL_agent_placement on --pack --place --place_reward_num 2 --place_agent_gamma 0.05 --place_agent_epsilon 0.3 --place_dm_rlim 3  --place_agent_algorithm e_greedy ${flags_to_string flags}";
           }).vtr_reg_nightly.titan_quick_qor.stratixiv_arch.sparcT1_core_stratixiv_arch_timing.common;
     in
       flag_sweep "titan_sweep" test {
