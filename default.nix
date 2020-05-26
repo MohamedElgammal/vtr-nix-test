@@ -199,7 +199,7 @@ rec {
     variant = "softmax";
     url = "https://github.com/MohamedElgammal/exploration.git";
     ref = "exploration";
-    rev = "e37ba13b331c9102d509b2665338c4ad38c3ea37";
+    rev = "9ed622157b46b1367bd7fbb72cbe7b7d8a656832";
   };
 
   vtr_egreedy = vtrDerivation {
@@ -244,8 +244,9 @@ rec {
         }).custom;
     in
       flag_sweep "centroid_move_sweep" test {
-        inner_num = [0.125 0.25 0.5 1 2];
+        inner_num = [0.125 0.25 0.5 1];
         seed = range 1 3;
+        place_reward_num = [0 1 2 3];
       };
 
 
