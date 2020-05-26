@@ -199,7 +199,7 @@ rec {
     variant = "softmax";
     url = "https://github.com/MohamedElgammal/exploration.git";
     ref = "exploration";
-    rev = "9ed622157b46b1367bd7fbb72cbe7b7d8a656832";
+    rev = "e37ba13b331c9102d509b2665338c4ad38c3ea37";
   };
 
   vtr_egreedy = vtrDerivation {
