@@ -238,7 +238,7 @@ rec {
   
   centroid_move_sweep =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--simpleRL_agent_placement on --pack --place --place_agent_gamma 0.05 --place_dm_rlim 3  --place_agent_algorithm softmax --place_reward_num 2 ${flags_to_string flags}";
+          flags = "--simpleRL_agent_placement on --pack --place --place_agent_gamma 0.05 --place_dm_rlim 3  --place_agent_algorithm e_greedy --place_reward_num 2 ${flags_to_string flags}";
           vtr = vtr_egreedy;
         }).custom;
     in
