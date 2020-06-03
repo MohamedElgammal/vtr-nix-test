@@ -164,6 +164,8 @@ rec {
         seed = range 1 20;
       };
 
+
+
   mohameds_test = attrs:
     make_regression_tests (attrs // {
       tests = {
@@ -181,132 +183,54 @@ rec {
       };
     });
 
-  vtr_directed_moves = vtrDerivation {
-    variant = "directed_moves";
-    url = "ssh://git@github.com/MohamedElgammal/directed_moves.git";
-    ref = "directed_moves";
-    rev = "68cadcbfd6b98a13363556418e4e99823d63f193";
-  };
 
-  vtr_7_moves = vtrDerivation {
-    variant = "centroid_move";
-    url = "https://github.com/MohamedElgammal/directed_run.git";
-    ref = "directed_moves";
-    rev = "d5e85c1f37cb1d2675a9c63230b72bf6e85ab487";
-  };
-
-  vtr_softmax = vtrDerivation {
-    variant = "softmax";
-    url = "https://github.com/MohamedElgammal/exploration.git";
-    ref = "exploration";
-    rev = "e37ba13b331c9102d509b2665338c4ad38c3ea37";
-  };
-
-  vtr_egreedy = vtrDerivation {
-    variant = "egreedy";
-    url = "https://github.com/MohamedElgammal/exploration.git";
-    ref = "exploration";
-    rev = "9ed622157b46b1367bd7fbb72cbe7b7d8a656832";
-  };
-
-  vtr_rlim_moves = vtrDerivation {
-    variant = "rlim_option";
-    url = "https://github.com/MohamedElgammal/directed_run.git";
-    ref = "directed_moves";
-    rev = "7a84fd9dda8bafc5a8e35528c7fc1d2053c76cee";
-  };
- 
-  vtr_reward_limit = vtrDerivation {
-    variant = "limit_options";
-    url = "https://github.com/MohamedElgammal/directed_run.git";
-    ref = "directed_moves";
-    rev = "89299be62d88761c8366149103e686900aef97ee";
+  vtr_master = vtrDerivation {
+    variant = "latest_master";
+    url = "https://github.com/verilog-to-routing/vtr-verilog-to-routing.git";
+    ref = "master";
+    rev = "bb51a8b5b3ed65a8cb2ffebc6aa4b96c30f40630";
   };
   
-  directed_moves_sweep =
-    let test = { flags, ...}: (mohameds_test {
-          flags = "--simpleRL_agent_placement on --pack --place ${flags_to_string flags}";
-          vtr = vtr_directed_moves;
-        }).custom;
-    in
-      flag_sweep "directed_moves_sweep" test {
-        place_agent_gamma = [0.0005 0.001 0.005 0.01 0.05 0.1 0.5];
-        place_agent_epsilon = [0.05 0.1 0.2 0.3 0.4 0.5 0.9];
-        inner_num = [0.125 0.25 0.5 1 2];
-        seed = range 1 5;
-      };
+  vtr_exploration = vtrDerivation {
+    variant = "latest_branch";
+    url = "https://github.com/MohamedElgammal/exploration.git";
+    ref = "exploration";
+    rev = "fd0867167813f39c0797d316b65f66d9d1ca2036";
+  };
   
-  centroid_move_sweep =
+  master_baseline =
     let test = { flags, ...}: (mohameds_test {
-          #flags = "--simpleRL_agent_placement on --pack --place --route --place_agent_gamma 0.05 --place_dm_rlim 3  --place_agent_algorithm e_greedy --place_reward_num 2 ${flags_to_string flags}";
-          flags = "--simpleRL_agent_placement off --pack --place --route --place_dm_rlim 3 --place_static_move_prob {10,10,10,10,10,10,10} ${flags_to_string flags}";
-          vtr = vtr_egreedy;
+          flags = "--pack --place ${flags_to_string flags}";
+          vtr = vtr_master;
         }).custom;
     in
-      flag_sweep "centroid_move_sweep" test {
+      flag_sweep "master_baseline" test {
         inner_num = [0.125 0.25 0.5 1 2];
         seed = range 1 3;
       };
 
 
-  centroid_move_sweep2 =
+  branch_baseline =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--simpleRL_agent_placement on --pack --place --place_dm_rlim 3  --place_agent_gamma 0.05 --place_agent_algorithm softmax ${flags_to_string flags}";
-          vtr = vtr_softmax;
+          flags = "--simpleRL_agent_placement off --pack --place  ${flags_to_string flags}";
+          vtr = vtr_exploration;
         }).custom;
     in
-      flag_sweep "centroid_move_sweep2" test {
+      flag_sweep "branch_baseline" test {
         inner_num = [0.125 0.25 0.5 1 2];
         seed = range 1 3;
       };
 
-VPR8 =
+  branch_rl =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--simpleRL_agent_placement off --pack --place --place_static_move_prob {100,0,0,0,0,0,0} ${flags_to_string flags}";
-          vtr = vtr_7_moves;
+          flags = "--simpleRL_agent_placement on --pack --place --place_dm_rlim 3  --place_agent_gamma 0.05 --place_agent_epsilon 0.3 --place_agent_algorithm e_greedy ${flags_to_string flags}";
+          vtr = vtr_exploration;
         }).custom;
     in
-      flag_sweep "VPR8" test {
+      flag_sweep "branch_baseline" test {
         inner_num = [0.125 0.25 0.5 1 2];
         seed = range 1 3;
       };
-      
-Equi_prob =
-    let test = { flags, ...}: (mohameds_test {
-          flags = "--simpleRL_agent_placement off --pack --place --place_static_move_prob {10,10,10,10,10,10,10} ${flags_to_string flags}";
-          vtr = vtr_7_moves;
-        }).custom;
-    in
-      flag_sweep "Equi_prob" test {
-        inner_num = [0.125 0.25 0.5 1 2];
-        seed = range 1 3;
-      };      
-
-rlim =
-    let test = { flags, ...}: (mohameds_test {
-          flags = "--simpleRL_agent_placement on --pack --place --place_agent_epsilon 0.5 --place_agent_gamma 0.01  ${flags_to_string flags}";
-          vtr = vtr_rlim_moves;
-        }).custom;
-    in
-      flag_sweep "rlim" test {
-        inner_num = [0.125 0.25 0.5 1 2];
-        seed = range 1 5;
-        place_dm_rlim = [0 1 2 3 5 7];
-      };      
-      
-reward_limits =
-    let test = { flags, ...}: (mohameds_test {
-          flags = "--simpleRL_agent_placement on --pack --place --place_agent_epsilon 0.5 --place_agent_gamma 0.01  ${flags_to_string flags}";
-          vtr = vtr_reward_limit;
-        }).custom;
-    in
-      flag_sweep "rlim" test {
-        inner_num = [0.125 0.25 0.5 1 2];
-        seed = range 1 3;
-        place_hi_limit = [0.7 0.8 0.9];
-        place_low_limit = [0.1 0.2 0.3];
-        place_decay_factor = [0.001 0.005 0.01];
-      };    
       
       
 titan_sweep =
