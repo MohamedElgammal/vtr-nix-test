@@ -174,7 +174,8 @@ rec {
           qor_parse_file = "qor_large.txt";
           pass_requirements_file = "pass_requirements.txt";
           arch_list = ["k6_frac_N10_frac_chain_mem32K_40nm.xml"];
-          circuit_list = ["bgm.v" "LU8PEEng.v" "LU32PEEng.v" "mcml.v"  "stereovision0.v" "stereovision1.v" "stereovision2.v"];
+          #circuit_list = ["bgm.v" "LU8PEEng.v" "LU32PEEng.v" "mcml.v"  "stereovision0.v" "stereovision1.v" "stereovision2.v"];
+          circuit_list = ["stereovision0.v"];
           archs_dir = "arch/timing";
           circuits_dir = "benchmarks/verilog";
           script_params = "-track_memory_usage --routing_failure_predictor off";
@@ -217,7 +218,9 @@ rec {
         }).custom;
     in
       flag_sweep "branch_baseline" test {
-        inner_num = [0.125 0.25 0.5 1 2];
+        place_static_move_prob = ["10,10,10,10,10,10,10" "10,0,0,0,0,0,0"];
+        #inner_num = [0.125 0.25 0.5 1 2];
+        inner_num = [0.125];
         seed = range 1 3;
       };
 
