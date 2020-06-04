@@ -224,11 +224,15 @@ rec {
 
   branch_rl =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--simpleRL_agent_placement on --pack --place --place_dm_rlim 3  --place_agent_gamma 0.05 --place_agent_epsilon 0.3 --place_agent_algorithm e_greedy ${flags_to_string flags}";
+          flags = "--simpleRL_agent_placement on --pack --place  ${flags_to_string flags}";
           vtr = vtr_exploration;
         }).custom;
     in
       flag_sweep "branch_rl" test {
+        place_dm_rlim = [1 2 3 7 1000];
+        place_agent_gamma = [0.0001 0.001 0.01 0.05 0.1 0.5];
+        place_agent_epsilon = [0.1 0.2 0.3 0.4 0.5];
+        place_agent_algorithm = ["softmax" "e_greedy"];
         inner_num = [0.125 0.25 0.5 1 2];
         seed = range 1 3;
       };
