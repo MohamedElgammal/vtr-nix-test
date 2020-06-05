@@ -196,7 +196,7 @@ rec {
     variant = "latest_branch";
     url = "https://github.com/MohamedElgammal/exploration.git";
     ref = "exploration";
-    rev = "c3464db2d57ffbff28c2683f93a2c80319165d18";
+    rev = "888e9218ae00c92a87b3c322bc76de65dec73b5a";
   };
   
   master_baseline =
