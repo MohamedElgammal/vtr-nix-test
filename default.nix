@@ -195,7 +195,7 @@ rec {
     variant = "latest_branch";
     url = "https://github.com/MohamedElgammal/exploration.git";
     ref = "exploration";
-    rev = "fd0867167813f39c0797d316b65f66d9d1ca2036";
+    rev = "c3464db2d57ffbff28c2683f93a2c80319165d18";
   };
   
   master_baseline =
@@ -229,12 +229,12 @@ rec {
         }).custom;
     in
       flag_sweep "branch_rl" test {
-        place_dm_rlim = [1 2 3 7 1000];
-        place_agent_gamma = [0.0001 0.001 0.01 0.05 0.1 0.5];
-        place_agent_epsilon = [0.1 0.2 0.3 0.4 0.5];
-        place_agent_algorithm = ["softmax" "e_greedy"];
-        inner_num = [0.125 0.25 0.5 1 2];
-        seed = range 1 3;
+        #place_dm_rlim = [1 2 3 7 1000];
+        #place_agent_gamma = [0.0001 0.001 0.01 0.05 0.1 0.5];
+        #place_agent_epsilon = [0.1 0.2 0.3 0.4 0.5];
+        #place_agent_algorithm = ["softmax" "e_greedy"];
+        inner_num = [0.025];
+        seed = range 1 2;
       };
       
    branch_rl_sweep =
@@ -244,7 +244,7 @@ rec {
          }).custom;
      in
        flag_sweep "branch_rl" test {
-         place_reward_num = [0 1 2 3]
+         place_reward_num = [0 1 2 3];
          inner_num = [0.125 0.25 0.5 1 2];
          seed = range 1 3;
        };      
