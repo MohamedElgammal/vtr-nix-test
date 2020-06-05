@@ -237,7 +237,17 @@ rec {
         seed = range 1 3;
       };
       
-      
+   branch_rl_sweep =
+     let test = { flags, ...}: (mohameds_test {
+           flags = "--simpleRL_agent_placement on --pack --place --place_agent_epsilon 0.3 --place_agent_gamma 0.05 --place_agent_algorithm e_greedy --place_dm_rlim 3  ${flags_to_string flags}";
+           vtr = vtr_exploration;
+         }).custom;
+     in
+       flag_sweep "branch_rl" test {
+         place_reward_num = [0 1 2 3]
+         inner_num = [0.125 0.25 0.5 1 2];
+         seed = range 1 3;
+       };      
 titan_sweep =
     let test = {flags, ...}:
           (make_regression_tests {
