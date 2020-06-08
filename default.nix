@@ -250,41 +250,6 @@ rec {
          inner_num = [0.125 0.25 0.5 1 2];
          seed = range 1 3;
        };      
-titan_sweep =
-    let test = {flags, ...}:
-          (make_regression_tests {
-            vtr = vtr_egreedy;
-            flags = "--inner_num 1 --simpleRL_agent_placement on --place_reward_num 2 --place_agent_gamma 0.05 --place_agent_epsilon 0.3 --place_dm_rlim 3  --place_agent_algorithm e_greedy ${flags_to_string flags}";
-          }).vtr_reg_nightly.titan_quick_qor;
-    in
-      flag_sweep "titan_sweep" test {
-        #inner_num = [0.125 0.25 0.5 1.0];
-        seed = range 1 3;
-    };
-    
-titan_vpr =
-    let test = {flags, ...}:
-          (make_regression_tests {
-            vtr = vtr_egreedy;
-            flags = "--simpleRL_agent_placement off --pack --place ${flags_to_string flags}";
-          }).vtr_reg_nightly.titan_quick_qor;
-    in
-      flag_sweep "titan_vpr" test {
-        inner_num = [0.125 0.25 0.5 1.0];
-        seed = range 1 3;
-    };
-    
-titan_equal =
-    let test = {flags, ...}:
-          (make_regression_tests {
-            vtr = vtr_egreedy;
-            flags = "--simpleRL_agent_placement off --place_static_move_prob {10,10,10,10,10,10,10} --pack --place   ${flags_to_string flags}";
-          }).vtr_reg_nightly.titan_quick_qor;
-    in
-      flag_sweep "titan_equal" test {
-        inner_num = [0.125 0.25 0.5 1.0];
-        seed = range 1 3;
-    };
 
 }
 
