@@ -4,5 +4,5 @@ with import ../default.nix { pkgs = import <nixpkgs> {}; }; # import default.nix
 
 # each attribute is a job
 {
-    branch_baseline = branch_baseline.summary;
+    branch_test = branch_test.summary;
 }
