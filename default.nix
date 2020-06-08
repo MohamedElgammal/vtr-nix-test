@@ -196,7 +196,7 @@ rec {
     variant = "latest_branch";
     url = "https://github.com/MohamedElgammal/exploration.git";
     ref = "exploration";
-    rev = "888e9218ae00c92a87b3c322bc76de65dec73b5a";
+    rev = "ad42df222b9aa841a3ea47d9022f4d4d0238f690";
   };
   
   master_baseline =
@@ -213,14 +213,14 @@ rec {
 
   branch_baseline =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--simpleRL_agent_placement off --pack --place  --place_static_move_prob {10,0,0,0,0,0,0} ${flags_to_string flags}";
+          flags = "--simpleRL_agent_placement off --pack --place --place_dm_rlim 3  ${flags_to_string flags}";
           vtr = vtr_exploration;
         }).custom;
     in
       flag_sweep "branch_baseline" test {
-        #place_static_move_prob = ["10,10,10,10,10,10,10" "10,0,0,0,0,0,0"];
-        inner_num = [0.125 0.25 0.5 1 2];
-        seed = range 1 3;
+        place_static_move_prob = ["10,10,10,10,10,10,10" "10,0,0,0,0,0,0" "0,10,0,0,0,0,0" "10,10,0,0,0,0,0" "0,0,10,0,0,0,0" "10,0,10,0,0,0,0"];
+        inner_num = [0.125 1];
+        seed = range 1 2;
       };
 
   branch_rl =
