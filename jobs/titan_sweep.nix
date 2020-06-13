@@ -4,5 +4,5 @@ with import ../default.nix { pkgs = import <nixpkgs> {}; }; # import default.nix
 
 # each attribute is a job
 {
-    titan_sweep = titan_sweep.summary;
+    titan_test = titan_test.summary;
 }
