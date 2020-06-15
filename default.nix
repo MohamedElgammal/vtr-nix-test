@@ -189,7 +189,7 @@ rec {
     variant = "latest_master";
     url = "https://github.com/verilog-to-routing/vtr-verilog-to-routing.git";
     ref = "master";
-    rev = "bb51a8b5b3ed65a8cb2ffebc6aa4b96c30f40630";
+    rev = "1b9065116a6939eea16204885d9d53997a646186";
   };
   
   vtr_exploration = vtrDerivation {
@@ -258,7 +258,7 @@ rec {
    branch_test =
     let test = { flags, ...}: (mohameds_test {
           flags = "--pack --place ${flags_to_string flags}";
-          vtr = vtr_exploration;
+          vtr = vtr_master;
         }).custom;
     in
       flag_sweep "branch_test" test {
@@ -270,7 +270,7 @@ rec {
    titan_test =
     let test = {flags, ...}:
         (make_regression_tests {
-            vtr = vtr_exploration;
+            vtr = vtr_master;
             flags = "--pack --place ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
