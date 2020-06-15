@@ -193,10 +193,10 @@ rec {
   };
   
   vtr_exploration = vtrDerivation {
-    variant = "latest_branch";
+    variant = "merge-base-branch";
     url = "https://github.com/MohamedElgammal/exploration.git";
-    ref = "exploration";
-    rev = "d007fe05f86b2bf82fc099287f159ecf3689c3a1";
+    ref = "merge-base-branch";
+    rev = "06847757816efed89e5216bfaf15c118498bedc4";
   };
   
   
@@ -257,12 +257,12 @@ rec {
 
    branch_test =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--simpleRL_agent_placement off --pack --place --place_dm_rlim 3  ${flags_to_string flags}";
+          flags = "--pack --place ${flags_to_string flags}";
           vtr = vtr_exploration;
         }).custom;
     in
       flag_sweep "branch_test" test {
-        place_static_move_prob = ["100,0,0,0,0,0,0" "0,100,0,0,0,0,0" "50,50,0,0,0,0,0" "0,0,100,0,0,0,0" "50,0,50,0,0,0,0" "0,0,0,100,0,0,0" "50,0,0,50,0,0,0" "0,0,0,0,100,0,0" "50,0,0,0,50,0,0" "0,0,0,0,0,100,0" "50,0,0,0,0,50,0" "0,0,0,0,0,0,100" "50,0,0,0,0,0,50" "50,0,0,0,0,5,0" "50,0,0,0,0,0,5"];
+        #place_static_move_prob = ["100,0,0,0,0,0,0" "0,100,0,0,0,0,0" "50,50,0,0,0,0,0" "0,0,100,0,0,0,0" "50,0,50,0,0,0,0" "0,0,0,100,0,0,0" "50,0,0,50,0,0,0" "0,0,0,0,100,0,0" "50,0,0,0,50,0,0" "0,0,0,0,0,100,0" "50,0,0,0,0,50,0" "0,0,0,0,0,0,100" "50,0,0,0,0,0,50" "50,0,0,0,0,5,0" "50,0,0,0,0,0,5"];
         inner_num = [0.125 1];
         seed = range 1 3;
       };
@@ -271,11 +271,11 @@ rec {
     let test = {flags, ...}:
         (make_regression_tests {
             vtr = vtr_exploration;
-            flags = "--simpleRL_agent_placement off --pack --place  --place_dm_rlim 3  ${flags_to_string flags}";
+            flags = "--pack --place ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
       flag_sweep "titan_test" test {
-        place_static_move_prob = ["100,0,0,0,0,0,0" "0,100,0,0,0,0,0" "50,50,0,0,0,0,0" "0,0,100,0,0,0,0" "50,0,50,0,0,0,0" "0,0,0,100,0,0,0" "50,0,0,50,0,0,0" "0,0,0,0,100,0,0" "50,0,0,0,50,0,0" "0,0,0,0,0,100,0" "50,0,0,0,0,50,0" "0,0,0,0,0,0,100" "50,0,0,0,0,0,50" "50,0,0,0,0,5,0" "50,0,0,0,0,0,5"];
+        #place_static_move_prob = ["100,0,0,0,0,0,0" "0,100,0,0,0,0,0" "50,50,0,0,0,0,0" "0,0,100,0,0,0,0" "50,0,50,0,0,0,0" "0,0,0,100,0,0,0" "50,0,0,50,0,0,0" "0,0,0,0,100,0,0" "50,0,0,0,50,0,0" "0,0,0,0,0,100,0" "50,0,0,0,0,50,0" "0,0,0,0,0,0,100" "50,0,0,0,0,0,50" "50,0,0,0,0,5,0" "50,0,0,0,0,0,5"];
         inner_num = [0.125  1.0];
         seed = range 1 3;
     };
