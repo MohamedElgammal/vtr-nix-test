@@ -272,7 +272,7 @@ rec {
     let test = {flags, ...}:
         (make_regression_tests {
             vtr = vtr_exploration;
-            flags = "--pack --place --place_dm_rlim 3 --seed 1 --place_static_move_prob {0,100,0,0,0,0,0} ${flags_to_string flags}";
+            flags = "--pack --place --place_dm_rlim 3 --seed 1 ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
       flag_sweep "titan_test" test {
