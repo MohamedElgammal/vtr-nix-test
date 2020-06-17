@@ -175,8 +175,7 @@ rec {
           qor_parse_file = "qor_large.txt";
           pass_requirements_file = "pass_requirements.txt";
           arch_list = ["k6_frac_N10_frac_chain_mem32K_40nm.xml"];
-          circuit_list = ["bgm.v"];
-          #circuit_list = ["bgm.v" "LU8PEEng.v" "LU32PEEng.v" "mcml.v"  "stereovision0.v" "stereovision1.v" "stereovision2.v"];
+          circuit_list = ["bgm.v" "LU8PEEng.v" "LU32PEEng.v" "mcml.v"  "stereovision0.v" "stereovision1.v" "stereovision2.v"];
           archs_dir = "arch/timing";
           circuits_dir = "benchmarks/verilog";
           script_params = "-track_memory_usage --routing_failure_predictor off";
@@ -258,25 +257,24 @@ rec {
 
    branch_test =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--pack --place --place_dm_rlim 3 ${flags_to_string flags}";
+          flags = "--pack --place --place_dm_rlim 3 --place_static_move_prob {0,100,0,0,0,0,0} ${flags_to_string flags}";
           vtr = vtr_exploration;
         }).custom;
     in
       flag_sweep "branch_test" test {
-        place_static_move_prob = ["0,100,0,0,0,0,0"];
-        inner_num = [0.125];
-        #seed = range 1 3;
+        inner_num = [0.125 1.0];
+        seed = range 1 3;
       };
 
    titan_test =
     let test = {flags, ...}:
         (make_regression_tests {
             vtr = vtr_exploration;
-            flags = "--pack --place --place_dm_rlim 3 --seed 1 ${flags_to_string flags}";
+            flags = "--pack --place --place_dm_rlim 3 --seed 1 --place_static_move_prob {0,100,0,0,0,0,0} ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
       flag_sweep "titan_test" test {
-        place_static_move_prob = ["0,100,0,0,0,0,0" "50,50,0,0,0,0,0" "0,0,100,0,0,0,0" "50,0,50,0,0,0,0" "0,0,0,100,0,0,0" "50,0,0,50,0,0,0" "0,0,0,0,100,0,0" "50,0,0,0,50,0,0" "0,0,0,0,0,100,0" "50,0,0,0,0,50,0" "0,0,0,0,0,0,100" "50,0,0,0,0,0,50" "50,0,0,0,0,5,0" "50,0,0,0,0,0,5"];
+        #place_static_move_prob = ["0,100,0,0,0,0,0" "50,50,0,0,0,0,0" "0,0,100,0,0,0,0" "50,0,50,0,0,0,0" "0,0,0,100,0,0,0" "50,0,0,50,0,0,0" "0,0,0,0,100,0,0" "50,0,0,0,50,0,0" "0,0,0,0,0,100,0" "50,0,0,0,0,50,0" "0,0,0,0,0,0,100" "50,0,0,0,0,0,50" "50,0,0,0,0,5,0" "50,0,0,0,0,0,5"];
         inner_num = [0.125  1.0];
         #seed = range 1 1;
     };
