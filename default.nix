@@ -258,12 +258,12 @@ rec {
 
    branch_test =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--pack --place --place_dm_rlim 3 --place_static_move_prob {0,10,0,0,0,0,0} ${flags_to_string flags}";
+          flags = "--pack --place --place_dm_rlim 3 ${flags_to_string flags}";
           vtr = vtr_exploration;
         }).custom;
     in
       flag_sweep "branch_test" test {
-        #place_static_move_prob = ["{0,100,0,0,0,0,0}"];
+        place_static_move_prob = ["\{0,100,0,0,0,0,0\}"];
         inner_num = [0.125];
         #seed = range 1 3;
       };
