@@ -263,7 +263,7 @@ rec {
         }).custom;
     in
       flag_sweep "branch_test" test {
-        #place_static_move_prob = ["0,100,0,0,0,0,0"];
+        place_static_move_prob = ["{0,100,0,0,0,0,0}"];
         inner_num = [0.125 1];
         seed = range 1 3;
       };
