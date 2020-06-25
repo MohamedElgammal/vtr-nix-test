@@ -196,7 +196,7 @@ rec {
     variant = "rl_dm";
     url = "https://github.com/MohamedElgammal/exploration.git";
     ref = "rl_dm";
-    rev = "5ba77af63c24b5e464fd282cb3c7ac05be404e5a";
+    rev = "67cfb5077276b30c11371b644958f7341bf261d8";
     #rev = "6ccca52e9a85f596387722c50d25281162c445f3";
   };
   
@@ -267,6 +267,7 @@ rec {
         #place_static_move_prob = ["0 100 0 0 0 0 0" "50 50 0 0 0 0 0"];
         inner_num = [0.125 1.0];
         seed = range 1 3;
+        place_timing_cost_func = [0 1];
       };
 
    titan_test =
@@ -281,6 +282,7 @@ rec {
         #place_static_move_prob = ["0 100 0 0 0 0 0" "50 50 0 0 0 0 0"];
         inner_num = [0.125  1.0];
         #seed = range 1 1;
+        place_timing_cost_func = [0 1];
     };
 }
 
