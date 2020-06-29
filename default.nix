@@ -258,30 +258,30 @@ rec {
 
    branch_test =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--pack --place --place_dm_rlim 3 --seed 1 ${flags_to_string flags}";
+          flags = "--pack --place --place_dm_rlim 3 ${flags_to_string flags}";
           vtr = vtr_exploration;
         }).custom;
     in
       flag_sweep "branch_test" test {
-        #place_static_move_prob = ["100 0 0 0 0 0 0" "0 100 0 0 0 0 0" "50 50 0 0 0 0 0" "0 0 100 0 0 0 0" "50 0 50 0 0 0 0" "0 0 0 100 0 0 0" "50 0 0 50 0 0 0" "0 0 0 0 100 0 0" "50 0 0 0 50 0 0" "0 0 0 0 0 100 0" "50 0 0 0 0 50 0" "0 0 0 0 0 0 100" "50 0 0 0 0 0 50" "50 0 0 0 0 5 0" "50 0 0 0 0 0 5"];
-        place_static_move_prob = ["100 0 0 0 0 0 0" "50 50 0 0 0 0 0"];
+        place_static_move_prob = ["100 0 0 0 0 0 0" "0 100 0 0 0 0 0" "50 50 0 0 0 0 0" "0 0 100 0 0 0 0" "50 0 50 0 0 0 0" "0 0 0 100 0 0 0" "50 0 0 50 0 0 0" "0 0 0 0 100 0 0" "50 0 0 0 50 0 0" "0 0 0 0 0 100 0" "50 0 0 0 0 50 0" "0 0 0 0 0 0 100" "50 0 0 0 0 0 50" "50 0 0 0 0 5 0" "50 0 0 0 0 0 5"];
+        #place_static_move_prob = ["100 0 0 0 0 0 0" "50 50 0 0 0 0 0"];
         inner_num = [0.125 1.0];
-        #seed = range 1 3;
-        #place_timing_cost_func = [0 1];
+        seed = range 1 3;
+        place_timing_cost_func = [0 1];
       };
 
    titan_test =
     let test = {flags, ...}:
         (make_regression_tests {
             vtr = vtr_exploration;
-            flags = "--pack --place --place_dm_rlim 3 --seed 1 ${flags_to_string flags}";
+            flags = "--pack --place --place_dm_rlim 3 ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
       flag_sweep "titan_test" test {
         place_static_move_prob = ["100 0 0 0 0 0 0" "0 100 0 0 0 0 0" "50 50 0 0 0 0 0" "0 0 100 0 0 0 0" "50 0 50 0 0 0 0" "0 0 0 100 0 0 0" "50 0 0 50 0 0 0" "0 0 0 0 100 0 0" "50 0 0 0 50 0 0" "0 0 0 0 0 100 0" "50 0 0 0 0 50 0" "0 0 0 0 0 0 100" "50 0 0 0 0 0 50" "50 0 0 0 0 5 0" "50 0 0 0 0 0 5"];
         #place_static_move_prob = ["0 100 0 0 0 0 0" "50 50 0 0 0 0 0"];
         inner_num = [0.125  1.0];
-        #seed = range 1 1;
+        seed = range 1 3;
         place_timing_cost_func = [0 1];
     };
 }
