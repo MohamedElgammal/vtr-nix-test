@@ -193,10 +193,10 @@ rec {
   };
   
   vtr_exploration = vtrDerivation {
-    variant = "rl_dm";
+    variant = "rl_dm_5ba77af6";
     url = "https://github.com/MohamedElgammal/exploration.git";
     ref = "rl_dm";
-    rev = "67cfb5077276b30c11371b644958f7341bf261d8";
+    rev = "5ba77af63c24b5e464fd282cb3c7ac05be404e5a";
     #rev = "6ccca52e9a85f596387722c50d25281162c445f3";
   };
   
@@ -258,16 +258,16 @@ rec {
 
    branch_test =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--pack --place --place_dm_rlim 3  ${flags_to_string flags}";
+          flags = "--pack --place --place_dm_rlim 3 --seed 1 ${flags_to_string flags}";
           vtr = vtr_exploration;
         }).custom;
     in
       flag_sweep "branch_test" test {
-        place_static_move_prob = ["100 0 0 0 0 0 0" "0 100 0 0 0 0 0" "50 50 0 0 0 0 0" "0 0 100 0 0 0 0" "50 0 50 0 0 0 0" "0 0 0 100 0 0 0" "50 0 0 50 0 0 0" "0 0 0 0 100 0 0" "50 0 0 0 50 0 0" "0 0 0 0 0 100 0" "50 0 0 0 0 50 0" "0 0 0 0 0 0 100" "50 0 0 0 0 0 50" "50 0 0 0 0 5 0" "50 0 0 0 0 0 5"];
-        #place_static_move_prob = ["0 100 0 0 0 0 0" "50 50 0 0 0 0 0"];
+        #place_static_move_prob = ["100 0 0 0 0 0 0" "0 100 0 0 0 0 0" "50 50 0 0 0 0 0" "0 0 100 0 0 0 0" "50 0 50 0 0 0 0" "0 0 0 100 0 0 0" "50 0 0 50 0 0 0" "0 0 0 0 100 0 0" "50 0 0 0 50 0 0" "0 0 0 0 0 100 0" "50 0 0 0 0 50 0" "0 0 0 0 0 0 100" "50 0 0 0 0 0 50" "50 0 0 0 0 5 0" "50 0 0 0 0 0 5"];
+        place_static_move_prob = ["100 0 0 0 0 0 0" "50 50 0 0 0 0 0"];
         inner_num = [0.125 1.0];
-        seed = range 1 3;
-        place_timing_cost_func = [0 1];
+        #seed = range 1 3;
+        #place_timing_cost_func = [0 1];
       };
 
    titan_test =
