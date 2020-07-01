@@ -268,6 +268,7 @@ rec {
         place_agent_gamma = [0.001 0.005];
         place_agent_epsilon = [0.1 0.3 0.5];
         inner_num = [0.125 1.0];
+        place_reward_num = [1 2 3 4];
         seed = range 1 3;
         place_timing_cost_func = [0 1];
       };
@@ -285,6 +286,7 @@ rec {
         place_agent_gamma = [0.001 0.005];
         place_agent_epsilon = [0.1 0.3 0.5];
         inner_num = [0.125  1.0];
+        place_reward_num = [1 2 3 4];
         place_timing_cost_func = [0 1];
     };
 }
