@@ -193,10 +193,10 @@ rec {
   };
   
   vtr_exploration = vtrDerivation {
-    variant = "rl_dm_67cfb";
+    variant = "rl_dm_2262e";
     url = "https://github.com/MohamedElgammal/exploration.git";
     ref = "rl_dm";
-    rev = "67cfb5077276b30c11371b644958f7341bf261d8";
+    rev = "2262eb578a58a31d708ce0f5a5af20aebb2433cb";
     #rev = "6ccca52e9a85f596387722c50d25281162c445f3";
   };
   
