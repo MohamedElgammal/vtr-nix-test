@@ -193,10 +193,11 @@ rec {
   };
   
   vtr_exploration = vtrDerivation {
-    variant = "rl_dm_2262e";
+    variant = "rl_dm_068477";
     url = "https://github.com/MohamedElgammal/exploration.git";
-    ref = "rl_dm";
-    rev = "2262eb578a58a31d708ce0f5a5af20aebb2433cb";
+    ref = "merge-base-branch";
+    rev = "06847757816efed89e5216bfaf15c118498bedc4"
+    #rev = "2262eb578a58a31d708ce0f5a5af20aebb2433cb";
     #rev = "6ccca52e9a85f596387722c50d25281162c445f3";
   };
   
@@ -258,19 +259,19 @@ rec {
 
    branch_test =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--pack --place --place_dm_rlim 3 --simpleRL_agent_placement on --place_agent_algorithm e_greedy ${flags_to_string flags}";
+          flags = "--pack --place ${flags_to_string flags}";
           vtr = vtr_exploration;
         }).custom;
     in
       flag_sweep "branch_test" test {
         #place_static_move_prob = ["100 0 0 0 0 0 0" "0 100 0 0 0 0 0" "50 50 0 0 0 0 0" "0 0 100 0 0 0 0" "50 0 50 0 0 0 0" "0 0 0 100 0 0 0" "50 0 0 50 0 0 0" "0 0 0 0 100 0 0" "50 0 0 0 50 0 0" "0 0 0 0 0 100 0" "50 0 0 0 0 50 0" "0 0 0 0 0 0 100" "50 0 0 0 0 0 50" "50 0 0 0 0 5 0" "50 0 0 0 0 0 5"];
         #place_static_move_prob = ["100 0 0 0 0 0 0" "50 50 0 0 0 0 0"];
-        place_agent_gamma = [0.001 0.005];
-        place_agent_epsilon = [0.1 0.3 0.5];
-        inner_num = [0.125 1.0];
-        place_reward_num = [1 2 3 4];
+        #place_agent_gamma = [0.001 0.005];
+        #place_agent_epsilon = [0.1 0.3 0.5];
+        inner_num = [0.125];
+        #place_reward_num = [1 2 3 4];
         seed = range 1 3;
-        place_timing_cost_func = [0 1];
+        #place_timing_cost_func = [0 1];
       };
 
    titan_test =
