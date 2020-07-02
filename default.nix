@@ -197,7 +197,7 @@ rec {
     variant = "rl_dm_068477";
     url = "https://github.com/MohamedElgammal/exploration.git";
     ref = "merge-base-branch";
-    rev = "06847757816efed89e5216bfaf15c118498bedc4"
+    rev = "06847757816efed89e5216bfaf15c118498bedc4";
     #rev = "2262eb578a58a31d708ce0f5a5af20aebb2433cb";
     #rev = "6ccca52e9a85f596387722c50d25281162c445f3";
   };
