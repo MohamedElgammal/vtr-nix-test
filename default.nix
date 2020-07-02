@@ -260,7 +260,7 @@ rec {
 
    branch_test =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--pack --place ${flags_to_string flags}";
+          flags = "--pack --place --simpleRL_agent_placement on ${flags_to_string flags}";
           vtr = vtr_exploration;
         }).custom;
     in
