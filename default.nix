@@ -269,7 +269,7 @@ rec {
         #place_static_move_prob = ["100 0 0 0 0 0 0" "50 50 0 0 0 0 0"];
         #place_agent_gamma = [0.001 0.005];
         #place_agent_epsilon = [0.1 0.3 0.5];
-        place_static_move_prob = ["10 10 10 10 10 10 10"]
+        place_static_move_prob = ["10 10 10 10 10 10 10"];
         inner_num = [0.125];
         #place_reward_num = [1 2 3 4];
         seed = range 1 3;
