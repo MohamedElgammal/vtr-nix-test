@@ -274,8 +274,8 @@ rec {
         place_agent_algorithm = ["e_greedy" "softmax"];
         place_agent_gamma = [0.01 0.05];
         place_agent_epsilon = [0.1 0.3 0.5];
-        inner_num = [0.125  1];
-        place_reward_num = [1 2 3 4];
+        inner_num = [0.125];
+        place_reward_num = [2 3 4];
         place_timing_cost_func = [0 1];
     };
 }
