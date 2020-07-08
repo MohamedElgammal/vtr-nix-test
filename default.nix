@@ -194,10 +194,10 @@ rec {
   };
   
   vtr_exploration = vtrDerivation {
-    variant = "rl_dm_2262e";
+    variant = "rl_dm_02442";
     url = "https://github.com/MohamedElgammal/exploration.git";
     ref = "rl_dm";
-    rev = "2262eb578a58a31d708ce0f5a5af20aebb2433cb";
+    rev = "02442c207109e3160c4a4deade66f9b46c42bcd0";
   };
   
   vtr_merge = vtrDerivation {
@@ -246,7 +246,7 @@ rec {
 
    branch_test =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--pack --place --simpleRL_agent_placement on --place_dm_rlim 3 --place_agent_algorithm softmax --place_agent_gamma 0.05 --place_reward_num 2 ${flags_to_string flags}";
+          flags = "--pack --place --simpleRL_agent_placement on --place_dm_rlim 3 --place_agent_algorithm softmax --place_agent_gamma 0.05 ${flags_to_string flags}";
           vtr = vtr_exploration;
         }).custom;
     in
@@ -257,7 +257,7 @@ rec {
         #place_agent_gamma = [0.01 0.05];
         #place_agent_epsilon = [0.1 0.3 0.5];
         inner_num = [0.125 1];
-        #place_reward_num = [1 2 3 4];
+        place_reward_num = [1 2 3 4 5 6];
         seed = range 1 3;
         place_timing_cost_func = [0 1];
       };
