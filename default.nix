@@ -246,7 +246,7 @@ rec {
 
    branch_test =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--pack --place --simpleRL_agent_placement on --place_dm_rlim 3 --place_agent_algorithm softmax --place_agent_gamma 0.05 ${flags_to_string flags}";
+          flags = "--pack --place --simpleRL_agent_placement on --place_dm_rlim 3 --place_agent_algorithm e_greedy --place_agent_gamma 0.05 ${flags_to_string flags}";
           vtr = vtr_exploration;
         }).custom;
     in
@@ -255,7 +255,7 @@ rec {
         #place_static_move_prob = ["100 0 0 0 0 0 0" "50 50 0 0 0 0 0"];
         #place_agent_algorithm = ["e_greedy" "softmax"];
         #place_agent_gamma = [0.01 0.05];
-        #place_agent_epsilon = [0.1 0.3 0.5];
+        place_agent_epsilon = [0.1 0.3 0.5];
         inner_num = [0.125 1];
         place_reward_num = [1 2 3 4 5 6];
         seed = range 1 3;
