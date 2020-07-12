@@ -214,7 +214,7 @@ rec {
     rev = "5f0221b3be29f9e8d08561b9a312bfa610b81d12";
   };
   
-  vtr_merge = vtrDerivation {
+  vtr_baseline = vtrDerivation {
     variant = "rl_dm_merge";
     url = "https://github.com/MohamedElgammal/exploration.git";
     ref = "merge-base-branch";
@@ -236,7 +236,7 @@ rec {
    vtr_merge =
     let test = { flags, ...}: (mohameds_test {
           flags = "--pack --place ${flags_to_string flags}";
-          vtr = vtr_merge;
+          vtr = vtr_baseline;
         }).custom;
     in
       flag_sweep "branch_merge" test {
@@ -247,7 +247,7 @@ rec {
    titan_merge =
     let test = {flags, ...}:
         (make_regression_tests {
-            vtr = vtr_merge;
+            vtr = vtr_baseline;
             flags = "--pack --place --seed 1 ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
@@ -332,5 +332,6 @@ rec {
       flag_sweep "titan_agent3" test {
         inner_num = [0.125 0.25 0.45 0.6 0.7 0.8 1];
     };
+    
 }
 
