@@ -298,7 +298,7 @@ rec {
         }).custom;
     in
       flag_sweep "vtr_agent2" test {
-        place_static_move_prob = ["100 100 10 10 10 10 10"];
+        place_static_move_prob = ["100 10 10 10 10 10 10"];
         inner_num = [0.125 0.25 0.45 0.6 0.7 1];
         seed = range 1 3;
       };
