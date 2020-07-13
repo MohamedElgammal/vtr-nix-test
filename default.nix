@@ -245,7 +245,7 @@ rec {
         seed = range 1 24;
       };
 
-   titan_merge =
+   titan_merge_ =
     let test = {flags, ...}:
         (make_regression_tests {
             vtr = vtr_baseline;
