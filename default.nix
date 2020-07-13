@@ -233,14 +233,14 @@ rec {
       };
 
 
-   vtr_merge =
+   vtr_merge_ =
     let test = { flags, ...}: (mohameds_test {
           flags = "--pack --place ${flags_to_string flags}";
           vtr = vtr_baseline;
         }).custom;
     in
     
-      flag_sweep "branch_merge" test {
+      flag_sweep "vtr_merge_" test {
         inner_num = [0.125  0.4 0.75 1 1.2];
         seed = range 1 24;
       };
@@ -252,82 +252,82 @@ rec {
             flags = "--pack --place ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
-      flag_sweep "titan_merge" test {
+      flag_sweep "titan_merge_" test {
         inner_num = [0.125 0.4 0.75 1 1.2];
         seed = range 1 8;
     };
 
-   vtr_agent1 =
+   vtr_agent_1 =
     let test = { flags, ...}: (mohameds_test {
           flags = "--pack --place --simpleRL_agent_placement off --place_dm_rlim 3 ${flags_to_string flags}";
           vtr = vtr_exploration;
         }).custom;
     in
-      flag_sweep "vtr_agent1" test {
+      flag_sweep "vtr_agent_1" test {
         place_static_move_prob = ["100 10 10 10 10 10 10" "10 10 10 10 10 10 10" "100 10 10 10 10 10 0" "10 10 10 10 10 10 0"];
         place_timing_cost_func = [0 1];
         inner_num = [0.125 0.25 0.45  0.7 1];
         seed = range 1 3;
       };
 
-   titan_agent1 =
+   titan_agent_1 =
     let test = {flags, ...}:
         (make_regression_tests {
             vtr = vtr_exploration;
             flags = "--pack --place --place_dm_rlim 3 --seed 1 --simpleRL_agent_placement off   ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
-      flag_sweep "titan_agent1" test {
+      flag_sweep "titan_agent_1" test {
         place_static_move_prob = ["100 10 10 10 10 10 10" "10 10 10 10 10 10 10" "100 10 10 10 10 10 0" "10 10 10 10 10 10 0"];
         place_timing_cost_func = [0 1];
         inner_num = [0.125 0.25 0.45 0.7 1];
         #place_reward_num = [2 3 4];
     };
     
-   vtr_agent2 =
+   vtr_agent_2 =
     let test = { flags, ...}: (mohameds_test {
           flags = "--pack --place --simpleRL_agent_placement off --place_dm_rlim 3 ${flags_to_string flags}";
           vtr = vtr_exploration2;
         }).custom;
     in
-      flag_sweep "vtr_agent2" test {
+      flag_sweep "vtr_agent_2" test {
         place_static_move_prob = ["100 10 10 10 10 10 10" "10 10 10 10 10 10 10" "100 10 10 10 10 10 0" "10 10 10 10 10 10 0"];
         inner_num = [0.125 0.25 0.45 0.7 1];
         seed = range 1 3;
       };
 
-   titan_agent2 =
+   titan_agent_2 =
     let test = {flags, ...}:
         (make_regression_tests {
             vtr = vtr_exploration2;
             flags = "--pack --place --place_dm_rlim 3 --seed 1 --simpleRL_agent_placement off ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
-      flag_sweep "titan_agent2" test {
+      flag_sweep "titan_agent_2" test {
         place_static_move_prob = ["100 10 10 10 10 10 10" "10 10 10 10 10 10 10" "100 10 10 10 10 10 0" "10 10 10 10 10 10 0"];
         inner_num = [0.125 0.25 0.45 0.7 1];
     };
     
-   vtr_agent3 =
+   vtr_agent_3 =
     let test = { flags, ...}: (mohameds_test {
           flags = "--pack --place --simpleRL_agent_placement off --place_dm_rlim 3  ${flags_to_string flags}";
           vtr = vtr_exploration;
         }).custom;
     in
-      flag_sweep "vtr_agent3" test {
+      flag_sweep "vtr_agent_3" test {
         place_static_move_prob = ["100 10 10 10 10 10 10" "10 10 10 10 10 10 10" "100 10 10 10 10 10 0" "10 10 10 10 10 10 0"];
         inner_num = [0.125 0.25 0.45 0.7 1];
         seed = range 1 3;
       };
 
-   titan_agent3 =
+   titan_agent_3 =
     let test = {flags, ...}:
         (make_regression_tests {
             vtr = vtr_exploration;
             flags = "--pack --place --place_dm_rlim 3 --seed 1 --simpleRL_agent_placement off  ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
-      flag_sweep "titan_agent3" test {
+      flag_sweep "titan_agent_3" test {
         place_static_move_prob = ["100 10 10 10 10 10 10" "10 10 10 10 10 10 10" "100 10 10 10 10 10 0" "10 10 10 10 10 10 0"];
         inner_num = [0.125 0.25 0.45 0.7 1];
     };
