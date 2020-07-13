@@ -4,6 +4,6 @@ with import ../default.nix { pkgs = import <nixpkgs> {}; }; # import default.nix
 
 # each attribute is a job
 {
-    vtr_merge = vtr_merge.summary;
-    titan_merge = titan_merge.summary;
+    vtr_merge_ = vtr_merge_.summary;
+    titan_merge_ = titan_merge_.summary;
 }

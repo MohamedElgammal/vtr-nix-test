@@ -4,6 +4,6 @@ with import ../default.nix { pkgs = import <nixpkgs> {}; }; # import default.nix
 
 # each attribute is a job
 {
-    vtr_agent3 = vtr_agent3.summary;
-    titan_agent3 = titan_agent3.summary;
+    vtr_agent_3 = vtr_agent_3.summary;
+    titan_agent_3 = titan_agent_3.summary;
 }
