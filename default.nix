@@ -241,7 +241,7 @@ rec {
     in
     
       flag_sweep "branch_merge" test {
-        inner_num = [0.125 0.25 0.4 0.75 1 1.2];
+        inner_num = [0.125  0.4 0.75 1 1.2];
         seed = range 1 24;
       };
 
@@ -253,7 +253,7 @@ rec {
         }).vtr_reg_nightly.titan_quick_qor;
     in
       flag_sweep "titan_merge" test {
-        inner_num = [0.125 0.25 0.4 0.75 1 1.2];
+        inner_num = [0.125 0.4 0.75 1 1.2];
         seed = range 1 8;
     };
 
@@ -266,7 +266,7 @@ rec {
       flag_sweep "vtr_agent1" test {
         place_static_move_prob = ["100 10 10 10 10 10 10" "10 10 10 10 10 10 10" "100 10 10 10 10 10 0" "10 10 10 10 10 10 0"];
         place_timing_cost_func = [0 1];
-        inner_num = [0.125 0.25 0.45 0.6 0.7 1];
+        inner_num = [0.125 0.25 0.45  0.7 1];
         seed = range 1 3;
       };
 
@@ -280,7 +280,7 @@ rec {
       flag_sweep "titan_agent1" test {
         place_static_move_prob = ["100 10 10 10 10 10 10" "10 10 10 10 10 10 10" "100 10 10 10 10 10 0" "10 10 10 10 10 10 0"];
         place_timing_cost_func = [0 1];
-        inner_num = [0.125 0.25 0.45 0.6 0.7 1];
+        inner_num = [0.125 0.25 0.45 0.7 1];
         #place_reward_num = [2 3 4];
     };
     
@@ -292,7 +292,7 @@ rec {
     in
       flag_sweep "vtr_agent2" test {
         place_static_move_prob = ["100 10 10 10 10 10 10" "10 10 10 10 10 10 10" "100 10 10 10 10 10 0" "10 10 10 10 10 10 0"];
-        inner_num = [0.125 0.25 0.45 0.6 0.7 1];
+        inner_num = [0.125 0.25 0.45 0.7 1];
         seed = range 1 3;
       };
 
@@ -305,7 +305,7 @@ rec {
     in
       flag_sweep "titan_agent2" test {
         place_static_move_prob = ["100 10 10 10 10 10 10" "10 10 10 10 10 10 10" "100 10 10 10 10 10 0" "10 10 10 10 10 10 0"];
-        inner_num = [0.125 0.25 0.45 0.6 0.7 1];
+        inner_num = [0.125 0.25 0.45 0.7 1];
     };
     
    vtr_agent3 =
@@ -316,7 +316,7 @@ rec {
     in
       flag_sweep "vtr_agent3" test {
         place_static_move_prob = ["100 10 10 10 10 10 10" "10 10 10 10 10 10 10" "100 10 10 10 10 10 0" "10 10 10 10 10 10 0"];
-        inner_num = [0.125 0.25 0.45 0.6 0.7 1];
+        inner_num = [0.125 0.25 0.45 0.7 1];
         seed = range 1 3;
       };
 
@@ -329,7 +329,7 @@ rec {
     in
       flag_sweep "titan_agent3" test {
         place_static_move_prob = ["100 10 10 10 10 10 10" "10 10 10 10 10 10 10" "100 10 10 10 10 10 0" "10 10 10 10 10 10 0"];
-        inner_num = [0.125 0.25 0.45 0.6 0.7 1];
+        inner_num = [0.125 0.25 0.45 0.7 1];
     };
     
 }
