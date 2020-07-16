@@ -249,7 +249,7 @@ rec {
     let test = {flags, ...}:
         (make_regression_tests {
             vtr = vtr_baseline;
-            flags = "--pack --place --seed 1 ${flags_to_string flags}";
+            flags = "--pack --place --seed 3 ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
       flag_sweep "titan_merge_" test {
@@ -303,7 +303,7 @@ rec {
     let test = {flags, ...}:
         (make_regression_tests {
             vtr = vtr_exploration;
-            flags = "--pack --place  --seed 2 --simpleRL_agent_placement on --seed 2 --place_agent_algorithm softmax --place_dm_rlim 3 --place_timing_cost_func 0 ${flags_to_string flags}";
+            flags = "--pack --place  --simpleRL_agent_placement on --seed 3 --place_agent_algorithm softmax --place_dm_rlim 3 --place_timing_cost_func 0 ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
       flag_sweep "titan_agent_2" test {
@@ -329,7 +329,7 @@ rec {
     let test = {flags, ...}:
         (make_regression_tests {
             vtr = vtr_exploration2;
-            flags = "--pack --place  --seed 2 --simpleRL_agent_placement on --seed 2 --place_agent_algorithm softmax --place_dm_rlim 3 --place_timing_cost_func 0  ${flags_to_string flags}";
+            flags = "--pack --place  --simpleRL_agent_placement on --seed 3 --place_agent_algorithm softmax --place_dm_rlim 3 --place_timing_cost_func 0  ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
       flag_sweep "titan_agent_3" test {
@@ -355,7 +355,7 @@ rec {
     let test = {flags, ...}:
         (make_regression_tests {
             vtr = vtr_exploration3;
-            flags = "--pack --place  --seed 2 --simpleRL_agent_placement on --seed 2 --place_agent_algorithm softmax --place_dm_rlim 3 --place_timing_cost_func 0  ${flags_to_string flags}";
+            flags = "--pack --place --simpleRL_agent_placement on --seed 3 --place_agent_algorithm softmax --place_dm_rlim 3 --place_timing_cost_func 0  ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
       flag_sweep "titan_agent_4" test {
