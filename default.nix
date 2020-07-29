@@ -276,7 +276,7 @@ rec {
         }).vtr_reg_nightly.titan_quick_qor;
     in
       flag_sweep "titan_agent_1" test {
-        inner_num = [0.125 0.25 1 1.2]
+        inner_num = [0.125 0.25 1 1.2];
     };
     
    vtr_agent_2 =
