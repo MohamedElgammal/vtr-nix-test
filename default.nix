@@ -241,19 +241,19 @@ rec {
     in
     
       flag_sweep "vtr_merge_" test {
-        inner_num = [0.125  0.25 1 1.2];
-        seed = range 50 52;
+        inner_num = [0.125  0.25 1];
+        seed = range 53 55;
       };
 
    titan_merge_ =
     let test = {flags, ...}:
         (make_regression_tests {
             vtr = vtr_baseline;
-            flags = "--pack --place --seed 10  ${flags_to_string flags}";
+            flags = "--pack --place --seed 11  ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
       flag_sweep "titan_merge_" test {
-        inner_num = [0.125 0.25 1 1.2];
+        inner_num = [0.125 0.25 1 ];
     };
 
    vtr_agent_1 =
