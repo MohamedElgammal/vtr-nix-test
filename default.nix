@@ -201,10 +201,10 @@ rec {
   };
   
   vtr_exploration2 = vtrDerivation {
-    variant = "rl_dm_1c076";
+    variant = "rl_dm_2e385f";
     url = "https://github.com/MohamedElgammal/exploration.git";
     ref = "rl_dm";
-    rev = "1c076c38f720bb55c0a9797275cd6b085d2a897f";
+    rev = "2e385f39b8f6bb77fb3159b099c82c5626154f3d";
   };
   
   vtr_exploration3 = vtrDerivation {
@@ -280,8 +280,8 @@ rec {
     
    vtr_agent_2 =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--pack --place --simpleRL_agent_placement on --place_agent_algorithm softmax  --place_dm_rlim 3 --place_timing_cost_func 1 --place_agent_gamma 0.05 --place_reward_num 6 ${flags_to_string flags}";
-          vtr = vtr_exploration;
+          flags = "--pack --place --simpleRL_agent_placement on --place_agent_algorithm softmax  --place_dm_rlim 3 --place_timing_cost_func 0 --place_agent_gamma 0.05 --place_reward_num 6 ${flags_to_string flags}";
+          vtr = vtr_exploration2;
         }).custom;
     in
       flag_sweep "vtr_agent_2" test {
@@ -292,7 +292,7 @@ rec {
    titan_agent_2 =
     let test = {flags, ...}:
         (make_regression_tests {
-            vtr = vtr_exploration;
+            vtr = vtr_exploration2;
             flags = "--pack --place  --simpleRL_agent_placement on --seed 1 --place_agent_algorithm softmax --place_dm_rlim 3 --place_timing_cost_func 1 --place_agent_gamma 0.05 --place_reward_num 6  ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
@@ -308,7 +308,7 @@ rec {
     in
       flag_sweep "vtr_agent_3" test {
         inner_num = [0.125 0.25 1];
-        place_static_move_prob = ["10 0 0 0 0 0 0"];
+        place_static_move_prob = ["10 10 0 0 0 0 0"];
         seed = range 1 3;
       };
 
@@ -321,7 +321,7 @@ rec {
     in
       flag_sweep "titan_agent_3" test {
         inner_num = [0.125 0.25 1];
-        place_static_move_prob = ["10 0 0 0 0 0 0"];
+        place_static_move_prob = ["10 10 0 0 0 0 0"];
     };
  
     vtr_agent_4 =
@@ -353,7 +353,7 @@ rec {
     vtr_prob =
     let test = { flags, ...}: (mohameds_test {
           flags = "--pack --place --simpleRL_agent_placement off  --place_dm_rlim 3 --place_timing_cost_func 0  ${flags_to_string flags}";
-          vtr = vtr_exploration;
+          vtr = vtr_exploration2;
         }).custom;
     in
       flag_sweep "vtr_prob" test {
@@ -365,7 +365,7 @@ rec {
    titan_prob =
     let test = {flags, ...}:
         (make_regression_tests {
-            vtr = vtr_exploration;
+            vtr = vtr_exploration2;
             flags = "--pack --place  --seed 1 --simpleRL_agent_placement off  --place_dm_rlim 3 --place_timing_cost_func 0  ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
