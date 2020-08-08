@@ -346,7 +346,7 @@ rec {
     in
       flag_sweep "titan_agent_4" test {
         inner_num = [0.125 0.25  1];
-        seed = ramge 1 10;
+        seed = range 1 10;
     };
     
     vtr_prob =
