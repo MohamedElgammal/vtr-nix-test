@@ -242,7 +242,7 @@ rec {
     
       flag_sweep "vtr_merge_" test {
         inner_num = [0.125  0.25 0.75 1];
-        seed = range 100 102;
+        seed = range 1 5;
       };
 
    titan_merge_ =
@@ -264,7 +264,7 @@ rec {
     in
       flag_sweep "vtr_agent_1" test {
         inner_num = [0.125 0.25 0.75 1];
-        seed = range 100 102;
+        seed = range 1 5;
       };
 
    titan_agent_1 =
@@ -334,7 +334,7 @@ rec {
     in
       flag_sweep "vtr_agent_4" test {
         inner_num = [0.125 0.25  1];
-        seed = range 100 102;
+        seed = range 1 5;
       };
 
    titan_agent_4 =
