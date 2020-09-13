@@ -187,10 +187,10 @@ rec {
 
 
   vtr_master = vtrDerivation {
-    variant = "latest_master_9a134";
+    variant = "latest_master_c8fda4";
     url = "https://github.com/verilog-to-routing/vtr-verilog-to-routing.git";
     ref = "merge_september";
-    rev = "9a1343381b7b90f207724f13e46429d41dda6760";
+    rev = "c8fda4123ac6dfb6510b9727fbabd40302cc56b5";
   };
   
   vtr_exploration = vtrDerivation {
@@ -201,10 +201,10 @@ rec {
   };
   
   vtr_exploration2 = vtrDerivation {
-    variant = "rl_dm_cdeddd4";
+    variant = "rl_dm_72706";
     url = "https://github.com/MohamedElgammal/exploration.git";
     ref = "merge_september";
-    rev = "cdeddd4526c573cabb345b3f409b37f5c2029be1";
+    rev = "72706911b5a366f13036d674c9cb18233184a3c5";
   };
   
   vtr_exploration3 = vtrDerivation {
@@ -320,53 +320,7 @@ rec {
         place_S_HI_LIMIT = [0.99 0.9 0.8 0.7];
         place_S_LOW_LIMIT = [0.99 0.9 0.8 0.7 0.5 0.3 0.2 0.1];
     };
-    
-   vtr_agent_3 =
-    let test = { flags, ...}: (mohameds_test {
-          flags = "--pack --place --simpleRL_agent_placement off  --place_dm_rlim 3 --place_timing_cost_func 0 ${flags_to_string flags}";
-          vtr = vtr_exploration;
-        }).custom;
-    in
-      flag_sweep "vtr_agent_3" test {
-        place_static_move_prob = ["10 10 10 10 10 10 10"];
-        inner_num = [0.125 0.25 0.8 1];
-        seed = range 1 3;
-      };
 
-   titan_agent_3 =
-    let test = {flags, ...}:
-        (make_regression_tests {
-            vtr = vtr_exploration;
-            flags = "--pack --place  --simpleRL_agent_placement off --seed 1 --place_dm_rlim 3  --place_timing_cost_func 0 ${flags_to_string flags}";
-        }).vtr_reg_nightly.titan_quick_qor;
-    in
-      flag_sweep "titan_agent_3" test {
-        place_static_move_prob = ["10 10 10 10 10 10 10"];
-        inner_num = [0.125 0.25 1];
-    };
-   
-    vtr_agent_4 =
-    let test = { flags, ...}: (mohameds_test {
-          flags = "--pack --place --simpleRL_agent_placement on --place_agent_algorithm e_greedy  --place_dm_rlim 3 --place_timing_cost_func 0  --place_agent_gamma 0.05 --place_agent_epsilon 0.3 --place_reward_num 6 ${flags_to_string flags}";
-          vtr = vtr_exploration3;
-        }).custom;
-    in
-      flag_sweep "vtr_agent_4" test {
-        inner_num = [0.125 0.25  1];
-        seed = range 1 5;
-      };
-
-   titan_agent_4 =
-    let test = {flags, ...}:
-        (make_regression_tests {
-            vtr = vtr_exploration3;
-            flags = "--pack --place --simpleRL_agent_placement on  --place_agent_algorithm e_greedy  --place_dm_rlim 3 --place_timing_cost_func 0  --place_agent_gamma 0.05 --place_agent_epsilon 0.3 --place_reward_num 6  ${flags_to_string flags}";
-        }).vtr_reg_nightly.titan_quick_qor;
-    in
-      flag_sweep "titan_agent_4" test {
-        inner_num = [0.125 0.25  1];
-        seed = range 1 10;
-    };
     
     vtr_prob =
     let test = { flags, ...}: (mohameds_test {
