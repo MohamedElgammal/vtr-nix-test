@@ -256,13 +256,13 @@ rec {
         inner_num = [0.125  0.25 0.75 1];
     };
 
-   vtr_agent_1 =
+   vtr_agent_3 =
     let test = { flags, ...}: (mohameds_test {
           flags = "--pack --place --simpleRL_agent_placement on --place_agent_algorithm softmax  --place_dm_rlim 3 --place_timing_cost_func 0 --place_agent_gamma 0.05 --place_reward_num 6 ${flags_to_string flags}";
           vtr = vtr_exploration;
         }).custom;
     in
-      flag_sweep "vtr_agent_1" test {
+      flag_sweep "vtr_agent_3" test {
         inner_num = [0.125 0.25 0.75 1];
         place_timing_cost_func = [0 1 2];
         td_place_exp_last = [2 4 6 8];
@@ -272,14 +272,14 @@ rec {
         seed = range 1 3;
       };
 
-   titan_agent_1 =
+   titan_agent_3 =
     let test = {flags, ...}:
         (make_regression_tests {
             vtr = vtr_exploration;
             flags = "--pack --place  --simpleRL_agent_placement on --place_agent_algorithm softmax --place_dm_rlim 3 --place_agent_gamma 0.05 --place_reward_num 6  ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
-      flag_sweep "titan_agent_1" test {
+      flag_sweep "titan_agent_3" test {
         inner_num = [0.125 0.25 0.75 1];
         place_timing_cost_func = [0 1 2];
         td_place_exp_last = [2 4 6 8];
@@ -289,13 +289,13 @@ rec {
         place_num_moves = [4 7];
     };
     
-   vtr_agent_2 =
+   vtr_agent_4 =
     let test = { flags, ...}: (mohameds_test {
           flags = "--pack --place --simpleRL_agent_placement on --place_agent_algorithm softmax  --place_dm_rlim 3 --place_timing_cost_func 0 --place_agent_gamma 0.05 --place_reward_num 6 ${flags_to_string flags}";
           vtr = vtr_exploration2;
         }).custom;
     in
-      flag_sweep "vtr_agent_2" test {
+      flag_sweep "vtr_agent_4" test {
         inner_num = [0.125 0.25 0.75 1];
         place_timing_cost_func = [0 1 2];
         td_place_exp_last = [2 4 6 8];
@@ -305,14 +305,14 @@ rec {
         seed = range 1 3;
       };
 
-   titan_agent_2 =
+   titan_agent_4 =
     let test = {flags, ...}:
         (make_regression_tests {
             vtr = vtr_exploration2;
             flags = "--pack --place  --simpleRL_agent_placement on --place_agent_algorithm softmax --place_dm_rlim 3 --place_agent_gamma 0.05 --place_reward_num 6  ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
-      flag_sweep "titan_agent_2" test {
+      flag_sweep "titan_agent_4" test {
         inner_num = [0.125 0.25 0.75 1];
         place_timing_cost_func = [0 1 2];
         td_place_exp_last = [2 4 6 8];
