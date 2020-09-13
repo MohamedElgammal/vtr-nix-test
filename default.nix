@@ -188,7 +188,7 @@ rec {
 
   vtr_master = vtrDerivation {
     variant = "latest_master_c8fda4";
-    url = "https://github.com/verilog-to-routing/vtr-verilog-to-routing.git";
+    url = "https://github.com/MohamedElgammal/exploration.git";
     ref = "merge_september";
     rev = "c8fda4123ac6dfb6510b9727fbabd40302cc56b5";
   };
