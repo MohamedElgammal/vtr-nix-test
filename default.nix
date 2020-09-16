@@ -304,7 +304,7 @@ rec {
     in
       flag_sweep "vtr_agent_2" test {
         inner_num = [0.125 0.25 0.75 1];
-        quench_recompute_divider = [-1 0];
+        quench_recompute_divider = ["-1" "0"];
         seed = range 1 3;
       };
 
@@ -317,7 +317,7 @@ rec {
     in
       flag_sweep "titan_agent_2" test {
         inner_num = [0.125 0.25 0.75 1];
-        quench_recompute_divider = [-1 0];
+        quench_recompute_divider = ["-1" "0"];
     };
     
    vtr_agent_3 =
