@@ -187,113 +187,66 @@ rec {
 
 
   vtr_master = vtrDerivation {
-    variant = "latest_master_c8fda4";
+    variant = "master_8508b";
     url = "https://github.com/MohamedElgammal/exploration.git";
-    ref = "merge_september";
-    rev = "c8fda4123ac6dfb6510b9727fbabd40302cc56b5";
+    ref = "local_master";
+    rev = "4af9f0ced1a23ea3078163799e190e359cec9807";
   };
   
   vtr_exploration = vtrDerivation {
-    variant = "rl_dm_c8fda4";
+    variant = "new_merge_sept_9d62f";
     url = "https://github.com/MohamedElgammal/exploration.git";
-    ref = "merge_september";
-    rev = "c8fda4123ac6dfb6510b9727fbabd40302cc56b5";
+    ref = "new_merge_sept";
+    rev = "9d62f966f3137be2b8899eb8cf2973873b6748d0";
   };
   
-  vtr_exploration2 = vtrDerivation {
-    variant = "rl_dm_727069";
-    url = "https://github.com/MohamedElgammal/exploration.git";
-    ref = "merge_september";
-    rev = "72706911b5a366f13036d674c9cb18233184a3c5";
-  };
   
-  vtr_exploration3 = vtrDerivation {
-    variant = "rl_dm_2e385f";
-    url = "https://github.com/MohamedElgammal/exploration.git";
-    ref = "rl_dm";
-    rev = "2e385f39b8f6bb77fb3159b099c82c5626154f3d";
-  };
-  
-  vtr_1state = vtrDerivation {
-    variant = "new_rlim_125beb";
-    url = "https://github.com/MohamedElgammal/exploration.git";
-    ref = "new_rlim";
-    rev = "125beb868b12db7cefe7da8ed8dd3bb4a396ed29";
-  };
-  
-  vtr_2state = vtrDerivation {
-    variant = "new_rlim_4a8b9";
-    url = "https://github.com/MohamedElgammal/exploration.git";
-    ref = "new_rlim";
-    rev = "4a8b9235565fb49d7704b3c6b3bc9985f7ebe815";
-  };
-  
-  vtr_baseline = vtrDerivation {
-    variant = "rl_dm_06847757";
-    url = "https://github.com/MohamedElgammal/exploration.git";
-    ref = "merge-base-branch";
-    rev = "06847757816efed89e5216bfaf15c118498bedc4";
-  };
-  
-  master_baseline =
+  vtr_master_test =
     let test = { flags, ...}: (mohameds_test {
           flags = "--pack --place ${flags_to_string flags}";
           vtr = vtr_master;
         }).custom;
     in
-      flag_sweep "master_baseline" test {
+      flag_sweep "vtr_master_test" test {
         inner_num = [0.125 0.25 0.5 1 2];
-        seed = range 1 ;
-      };
-
-
-   vtr_merge_ =
-    let test = { flags, ...}: (mohameds_test {
-          flags = "--pack --place ${flags_to_string flags}";
-          vtr = vtr_master;
-        }).custom;
-    in
-    
-      flag_sweep "vtr_merge_" test {
-        inner_num = [0.125  0.25 0.75 1];
         seed = range 1 3;
       };
 
-   titan_merge_ =
+   titan_master_test =
     let test = {flags, ...}:
         (make_regression_tests {
             vtr = vtr_master;
-            flags = "--pack --place ${flags_to_string flags}";
+            flags = "--pack --place --seed 1 ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
-      flag_sweep "titan_merge_" test {
-        inner_num = [0.125  0.25 0.75 1];
+      flag_sweep "titan_master_test" test {
+        inner_num = [0.125  0.25 0.5 1];
     };
 
-   vtr_agent_1 =
+   vtr_test_1 =
     let test = { flags, ...}: (mohameds_test {
           flags = "--pack --place --simpleRL_agent_placement on --place_agent_algorithm softmax  --place_dm_rlim 3 --place_agent_gamma 0.05 --place_reward_num 6 ${flags_to_string flags}";
-          vtr = vtr_1state;
+          vtr = vtr_exploration;
         }).custom;
     in
-      flag_sweep "vtr_agent_1" test {
-        inner_num = [0.125 0.25 0.75 1];
-        place_timing_cost_func = [0 1 2];
-        td_place_exp_last = [2 4 6 8];
+      flag_sweep "vtr_test_1" test {
+        inner_num = [0.125 0.25 0.5 1 2];
+        place_checkpointing = ["on" "off"];
+        place_agent_multistate = ["on" "off"];
         seed = range 1 3;
       };
 
-   titan_agent_1 =
+   titan_test_1 =
     let test = {flags, ...}:
         (make_regression_tests {
-            vtr = vtr_1state;
-            flags = "--pack --place  --simpleRL_agent_placement on --place_agent_algorithm softmax --place_dm_rlim 3 --place_agent_gamma 0.05 --place_reward_num 6  ${flags_to_string flags}";
+            vtr = vtr_exploration;
+            flags = "--pack --place  --simpleRL_agent_placement on --place_agent_algorithm softmax --place_dm_rlim 3 --place_agent_gamma 0.05 --place_reward_num 6  --seed 1 ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
-      flag_sweep "titan_agent_1" test {
-        inner_num = [0.125 0.25 0.75 1];
-        place_timing_cost_func = [0 1 2];
-        td_place_exp_last = [2 4 6 8];
+      flag_sweep "titan_test_1" test {
+        inner_num = [0.125 0.25 0.5 1];
+        place_checkpointing = ["on" "off"];
+        place_agent_multistate = ["on" "off"];
     };
     
    vtr_agent_2 =
