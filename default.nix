@@ -187,17 +187,17 @@ rec {
 
 
   vtr_master = vtrDerivation {
-    variant = "master_8508b";
+    variant = "master_9cf04";
     url = "https://github.com/MohamedElgammal/exploration.git";
     ref = "local_master";
-    rev = "4af9f0ced1a23ea3078163799e190e359cec9807";
+    rev = "9cf0484d43380f058ff53c2351d32f46cd81431c";
   };
   
   vtr_exploration = vtrDerivation {
-    variant = "new_merge_sept_9d62f";
+    variant = "new_merge_sept_608ec";
     url = "https://github.com/MohamedElgammal/exploration.git";
     ref = "new_merge_sept";
-    rev = "9d62f966f3137be2b8899eb8cf2973873b6748d0";
+    rev = "608ec430ab5813089d44359800e3f514b5c3e930";
   };
   
   
