@@ -272,4 +272,52 @@ rec {
         seed = range 1 3;
     };
 
+  vtr_fpt_master = vtrDerivation {
+    variant = "rl_dm_06847757";
+    url = "https://github.com/MohamedElgammal/exploration.git";
+    ref = "merge-base-branch";
+    rev = "06847757816efed89e5216bfaf15c118498bedc4";
+  };
+  
+  vtr_fpt_exploration = vtrDerivation {
+    variant = "rl_dm_2e385f";
+    url = "https://github.com/MohamedElgammal/exploration.git";
+    ref = "rl_dm";
+    rev = "2e385f39b8f6bb77fb3159b099c82c5626154f3d";
+  };
+
+   vtr_test_fpt =
+    let test = { flags, ...}: (mohameds_test {
+          flags = "--pack --place --simpleRL_agent_placement on --place_agent_algorithm softmax  --place_dm_rlim 3 --place_agent_gamma 0.05 --place_reward_num 6 --place_timing_cost_func 0  ${flags_to_string flags}";
+          vtr = vtr_fpt_exploration;
+        }).custom;
+    in
+      flag_sweep "vtr_test_fpt" test {
+        inner_num = [0.125 0.25 0.5 1 2];
+        seed = range 1 3;
+      };
+
+   vtr_merge_fpt =
+    let test = { flags, ...}: (mohameds_test {
+          flags = "--pack --place  ${flags_to_string flags}";
+          vtr = vtr_fpt_master;
+        }).custom;
+    in
+      flag_sweep "vtr_merge_fpt" test {
+        inner_num = [0.125 0.25 0.5 1 2];
+        seed = range 1 3;
+      };
+
+    vtr_prob_fpt =
+    let test = { flags, ...}: (mohameds_test {
+          flags = "--pack --place --simpleRL_agent_placement off --place_dm_rlim 3 --place_timing_cost_func 0  ${flags_to_string flags}";
+          vtr = vtr_fpt_exploration;
+        }).custom;
+    in
+      flag_sweep "vtr_prob_fpt" test {
+        inner_num = [0.125 0.25 0.5 1 2];
+        place_static_move_prob = ["10 10 10 10 10 10 10"];
+        seed = range 1 3;
+      };
+
 }
