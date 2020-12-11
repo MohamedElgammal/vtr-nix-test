@@ -14,7 +14,7 @@ with import ./library.nix {
   inherit pkgs;
 
   # default VTR revision
-  default_vtr_rev = "ab5f508db7e405925a45d1da918e6dca78730b44";
+  default_vtr_rev = "b4f390a7d9ae9a566944a5dbb8d89cd2498a79f1";
 };
 
 rec {
