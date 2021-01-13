@@ -348,7 +348,7 @@ rec {
         seed = range 1 3;
       };
 
-   titan_master =
+   titan_baseline =
     let test = {flags, ...}:
         (make_regression_tests {
             vtr = vtr_latest_master;
