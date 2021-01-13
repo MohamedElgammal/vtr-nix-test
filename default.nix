@@ -344,7 +344,7 @@ rec {
         }).custom;
     in
       flag_sweep "vtr_rl" test {
-        place_agent_algorithm = ["softmax" "e_greedy"]
+        place_agent_algorithm = ["softmax" "e_greedy"];
         seed = range 1 3;
       };
 
@@ -367,7 +367,7 @@ rec {
         }).vtr_reg_nightly.titan_quick_qor;
     in
       flag_sweep "titan_rl" test {
-        place_agent_algorithm = ["softmax" "e_greedy"]
+        place_agent_algorithm = ["softmax" "e_greedy"];
         seed = range 1 3;
     };
 
