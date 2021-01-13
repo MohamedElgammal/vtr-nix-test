@@ -322,7 +322,7 @@ rec {
 
   vtr_latest_master = vtrDerivation {
     variant = "master_aec608f";
-    url = "https://github.com/MohamedElgammal/exploration.git";
+    url = "https://github.com/verilog-to-routing/vtr-verilog-to-routing.git";
     ref = "master";
     rev = "aec608ff60a0c01b3c93407b722684d810f04b23";
   };
