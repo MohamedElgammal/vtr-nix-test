@@ -226,7 +226,7 @@ rec {
 
    vtr_test_1 =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--simpleRL_agent_placement on --place_agent_algorithm softmax  --place_dm_rlim 3 --place_agent_gamma 0.05 --place_reward_num 6 --place_checkpointing on --place_agent_multistate on  ${flags_to_string flags}";
+          flags = "--simpleRL_agent_placement on --place_agent_algorithnsoftmax  --place_dm_rlim 3 --place_agent_gamma 0.05 --place_reward_num 6 --place_checkpointing on --place_agent_multistate on  ${flags_to_string flags}";
           vtr = vtr_exploration;
         }).custom;
     in
@@ -319,5 +319,57 @@ rec {
         place_static_move_prob = ["10 10 10 10 10 10 10"];
         seed = range 1 3;
       };
+
+  vtr_latest_master = vtrDerivation {
+    variant = "master_aec608f";
+    url = "https://github.com/MohamedElgammal/exploration.git";
+    ref = "master";
+    rev = "aec608ff60a0c01b3c93407b722684d810f04b23";
+  };
+
+   vtr_baseline =
+    let test = { flags, ...}: (mohameds_test {
+          flags = "--pack --place --simpleRL_agent_placement off ${flags_to_string flags}";
+          vtr = vtr_latest_master;
+        }).custom;
+    in
+      flag_sweep "vtr_baseline" test {
+        seed = range 1 3;
+      };
+
+    vtr_rl =
+     let test = { flags, ...}: (mohameds_test {
+          flags = "--pack --place --simpleRL_agent_placement on ${flags_to_string flags}";
+          vtr = vtr_latest_master;
+        }).custom;
+    in
+      flag_sweep "vtr_rl" test {
+        place_agent_algorithm = ["softmax" "e_greedy"]
+        seed = range 1 3;
+      };
+
+   titan_master =
+    let test = {flags, ...}:
+        (make_regression_tests {
+            vtr = vtr_latest_master;
+            flags = "--pack --place --simpleRL_agent_placement off  ${flags_to_string flags}";
+        }).vtr_reg_nightly.titan_quick_qor;
+    in
+      flag_sweep "titan_master" test {
+        seed = range 1 3;
+    };
+
+   titan_rl =
+    let test = {flags, ...}:
+        (make_regression_tests {
+            vtr = vtr_latest_master;
+            flags = "--pack --place --simpleRL_agent_placement on  ${flags_to_string flags}";
+        }).vtr_reg_nightly.titan_quick_qor;
+    in
+      flag_sweep "titan_rl" test {
+        place_agent_algorithm = ["softmax" "e_greedy"]
+        seed = range 1 3;
+    };
+
 
 }
