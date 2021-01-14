@@ -318,7 +318,7 @@ rec {
         }).custom;
     in
       flag_sweep "vtr_baseline" test {
-        inner_num = 1;
+        inner_num = [1];
         seed = range 1 3;
       };
 
@@ -330,7 +330,7 @@ rec {
     in
       flag_sweep "vtr_rl" test {
         place_agent_algorithm = ["softmax" "e_greedy"];
-        inner_num = 0.5;
+        inner_num = [0.5];
         seed = range 1 3;
       };
 
@@ -342,7 +342,7 @@ rec {
         }).vtr_reg_nightly.titan_quick_qor;
     in
       flag_sweep "titan_master" test {
-        inner_num = 1;
+        inner_num = [1];
         seed = range 1 3;
     };
 
@@ -355,7 +355,7 @@ rec {
     in
       flag_sweep "titan_rl" test {
         place_agent_algorithm = ["softmax" "e_greedy"];
-        inner_num = 0.5;
+        inner_num = [0.5];
         seed = range 1 3;
     };
 
