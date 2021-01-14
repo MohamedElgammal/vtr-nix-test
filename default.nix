@@ -313,7 +313,7 @@ rec {
 
    vtr_baseline =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--pack --place --simpleRL_agent_placement off ${flags_to_string flags}";
+          flags = "--pack --place --RL_agent_placement off ${flags_to_string flags}";
           vtr = vtr_latest_master;
         }).custom;
     in
@@ -324,7 +324,7 @@ rec {
 
     vtr_rl =
      let test = { flags, ...}: (mohameds_test {
-          flags = "--pack --place --simpleRL_agent_placement on ${flags_to_string flags}";
+          flags = "--pack --place --RL_agent_placement on ${flags_to_string flags}";
           vtr = vtr_latest_master;
         }).custom;
     in
@@ -338,7 +338,7 @@ rec {
     let test = {flags, ...}:
         (make_regression_tests {
             vtr = vtr_latest_master;
-            flags = "--pack --place --simpleRL_agent_placement off  ${flags_to_string flags}";
+            flags = "--pack --place --RL_agent_placement off  ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
       flag_sweep "titan_master" test {
@@ -350,7 +350,7 @@ rec {
     let test = {flags, ...}:
         (make_regression_tests {
             vtr = vtr_latest_master;
-            flags = "--pack --place --simpleRL_agent_placement on  ${flags_to_string flags}";
+            flags = "--pack --place --RL_agent_placement on  ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
       flag_sweep "titan_rl" test {
