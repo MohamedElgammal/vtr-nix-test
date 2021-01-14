@@ -14,7 +14,7 @@ with import ./library.nix {
   inherit pkgs;
 
   # default VTR revision
-  default_vtr_rev = "6428b63f06eccf5ead8c27158e22a46b0ad4cd19";
+  default_vtr_rev = "b4f390a7d9ae9a566944a5dbb8d89cd2498a79f1";
 };
 
 rec {
@@ -59,22 +59,6 @@ rec {
   inner_num_sweep_nightly_3 = make_inner_num_sweep_comparison "vtr_reg_nightly" ["0.125" "0.25" "0.5" "1.0" "2.0"] { run_id = "3"; };
   dusty_sa = make_regression_tests { vtr = vtr_dusty_sa; flags = "--alpha_min 0.2"; };
   inner_num_sweep_with_flag_high = addAll "with_flag" (make_inner_num_sweep "vtr_reg_nightly" (val: { run_id = "with_flag_high"; vtr = vtr_dusty_sa; flags = "--alpha_min 0.2 --inner_num ${val}"; }) ["4.0" "10.0"]);
-
-  # flag_sweep :: root -> attrs -> ({root, flags} -> derivation) -> derivations
-  flag_sweep = root: test: attrs:
-    foldl (test: flag:
-      {root, flags}:
-      addAll root (listToAttrs (filter ({value, ...}: value != null) (map (value:
-        let name = nameStr "${flag} ${toString value}"; in
-        {
-          inherit name;
-          value = test {
-            root = "${root}_${name}";
-            flags = flags // { ${flag} = value; };
-          };
-        }) (getAttr flag attrs))))) test (attrNames attrs) { inherit root; flags = {}; };
-
-  flags_to_string = attrs: foldl (flags: flag: "${flags} --${flag} ${toString (getAttr flag attrs)}") "" (attrNames attrs);
 
   dusty_sa_sweep =
     let test = {root, flags}:

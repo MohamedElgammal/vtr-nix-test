@@ -21,7 +21,7 @@ rec {
   # build and install binaries and vtr_flow
   vtrDerivation = { url ? "https://github.com/verilog-to-routing/vtr-verilog-to-routing.git", # git repo
                     variant ? "verilog-to-routing", # identifier
-                    ref ? "HEAD", # git ref
+                    ref ? "master", # git ref
                     rev ? default_vtr_rev, # specific revision
                     patches ? [] # any patches to apply
                   }: stdenv.mkDerivation {
@@ -57,7 +57,6 @@ rec {
                     };
                     patches = [ ./install_abc.patch ] ++ patches;
                     postInstall = ''
-            cp -r $src/vtr_flow $out
             echo "variant: ${variant}" > $out/opts
             echo "url:     ${url}"    >> $out/opts
             echo "ref:     ${ref}"    >> $out/opts
@@ -89,9 +88,11 @@ rec {
     };
   };
 
+  vtr_test_python = python3.withPackages (p: with p; [ pandas prettytable ]);
+
   vtr_test_setup = vtr: stdenv.mkDerivation {
     name = "vtr_test_setup";
-    buildInputs = [ time coreutils perl python3 ];
+    buildInputs = [ time coreutils perl vtr_test_python ];
     inherit titan_benchmarks ispd_benchmarks coreutils vtr;
     vtr_src = vtr.src;
     builder = "${bash}/bin/bash";
@@ -108,12 +109,13 @@ rec {
                               run_id ? "default",
                               vtr ? vtrDerivation {},
                               keep_all_files ? false,
+                              okay_to_fail ? false,
                               name, ... }:
                                 stdenv.mkDerivation (
                                   cfg // {
-                                    python = python3.withPackages (p: with p; [ pandas ]);
-                                    buildInputs = [ time coreutils perl ];
+                                    buildInputs = [ time coreutils perl vtr_test_python valgrind ];
                                     vtr_test_setup = vtr_test_setup vtr;
+                                    vtr_src = vtr.src;
                                     get_param = ./get_param.py;
                                     inherit coreutils vtr;
                                     builder = "${bash}/bin/bash";
@@ -123,8 +125,11 @@ rec {
                                       timeout = 259200; # 3 days
                                       maxSilent = 259200; # 3 days
                                     };
+                                    flags = if builtins.isAttrs flags then flags_to_string flags else flags;
                                     #nativeBuildInputs = [ breakpointHook ]; # debug
                                   });
+
+  flags_to_string = attrs: foldl (flags: flag: "${flags} --${flag} ${toString (getAttr flag attrs)}") "" (attrNames attrs);
   removeExtension = str: builtins.head (builtins.match "([^\.]*).*" str);
   nameStr = builtins.replaceStrings [" " "/" "." "," ":"] ["_" "_" "_" "_" "_"];
   vtrTaskDerivations = root: cfg @ { arch_list, circuit_list, script_params_list ? [""],
@@ -205,5 +210,22 @@ rec {
   make_regression_tests = opts@{ vtr ? vtrDerivation {},
                                  tests ? (import (vtr_tests vtr)).regression_tests,
                                  ... }:
-    mkTests "regression_tests" tests (removeAttrs opts [ "tests" ]);
+    addAll "regression_tests" (mkTests "regression_tests" tests (removeAttrs opts [ "tests" ]));
+
+  summariesOf = mapAttrs (name: value: { of = value; } // value.summary);
+
+  # flag_sweep :: root -> attrs -> ({root, flags} -> derivation) -> derivations
+  flag_sweep = root: test: attrs:
+    foldl (test: flag:
+      {root, flags}:
+      addAll root (listToAttrs (filter ({value, ...}: value != null) (map (value:
+        let name = nameStr "${flag} ${toString value}"; in
+        {
+          inherit name;
+          value = test {
+            root = "${root}_${name}";
+            flags = flags // { ${flag} = value; };
+          };
+        }) (getAttr flag attrs))))) test (attrNames attrs) { inherit root; flags = {}; };
+
 }

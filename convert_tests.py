@@ -17,7 +17,7 @@ def process_task(task_name, out):
             xs = l.split("=", 1)
             if len(xs) == 2:
                 lhs = xs[0].strip()
-                rhs = xs[1].strip()
+                rhs = xs[1].strip().replace("../", "./") # prevent breaking out of the current directory
                 if lhs.endswith("_list_add"):
                     lhs = lhs[:-4] # remove "_add"
                     if lhs not in task:
