@@ -318,7 +318,7 @@ rec {
         }).custom;
     in
       flag_sweep "vtr_baseline" test {
-        inner_num = [1];
+        inner_num = [0.2 0.25 0.5 0.75 1 2];
         seed = range 1 3;
       };
 
@@ -329,8 +329,9 @@ rec {
         }).custom;
     in
       flag_sweep "vtr_rl" test {
+        #place_reward_fun = ["basic" "nonPenalizing_basic" "runtime_aware" "WLbiased_runtime_aware"];
         place_agent_algorithm = ["softmax" "e_greedy"];
-        inner_num = [0.5];
+        inner_num = [0.1 0.2 0.3 0.5 0.8];
         seed = range 1 3;
       };
 
@@ -341,8 +342,8 @@ rec {
             flags = "--pack --place --RL_agent_placement off  ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
-      flag_sweep "titan_master" test {
-        inner_num = [1];
+      flag_sweep "titan_baseline" test {
+        inner_num = [0.2 0.25 0.5 0.75 1 2];
         seed = range 1 3;
     };
 
@@ -354,8 +355,9 @@ rec {
         }).vtr_reg_nightly.titan_quick_qor;
     in
       flag_sweep "titan_rl" test {
+        #place_reward_fun = ["basic" "nonPenalizing_basic" "runtime_aware" "WLbiased_runtime_aware"];
+        inner_num = [0.1 0.2 0.3 0.5 0.8];
         place_agent_algorithm = ["softmax" "e_greedy"];
-        inner_num = [0.5];
         seed = range 1 3;
     };
 
