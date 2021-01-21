@@ -341,7 +341,7 @@ rec {
         }).custom;
     in
       flag_sweep "vtr_rl" test {
-        #place_reward_fun = ["basic" "nonPenalizing_basic" "runtime_aware" "WLbiased_runtime_aware"];
+        place_reward_fun = ["basic" "nonPenalizing_basic" "runtime_aware" "WLbiased_runtime_aware"];
         place_agent_algorithm = ["softmax" "e_greedy"];
         inner_num = [0.1 0.2 0.3 0.5 0.8 1];
         seed = range 1 5;
@@ -380,9 +380,9 @@ rec {
         }).vtr_reg_nightly.titan_quick_qor;
     in
       flag_sweep "titan_rl" test {
-        #place_reward_fun = ["basic" "nonPenalizing_basic" "runtime_aware" "WLbiased_runtime_aware"];
+        place_reward_fun = ["basic" "nonPenalizing_basic" "runtime_aware" "WLbiased_runtime_aware"];
         inner_num = [0.1 0.2 0.3 0.5 0.8 1];
-        place_agent_algorithm = ["softmax" "e_greedy"];
+        #place_agent_algorithm = ["softmax" "e_greedy"];
         seed = range 1 3;
     };
 
