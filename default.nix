@@ -318,7 +318,7 @@ rec {
         }).custom;
     in
       flag_sweep "vtr_baseline" test {
-        inner_num = [0.2 0.25 0.5 0.75 1 1.5];
+        inner_num = [1];
         seed = range 1 5;
       };
 
@@ -329,7 +329,7 @@ rec {
         }).custom;
     in
       flag_sweep "vtr_random" test {
-        inner_num = [0.2 0.25 0.5 0.75 1 1.5];
+        inner_num = [0.5];
         place_static_move_prob = ["10 10 10 10 10 10 10"];
         seed = range 1 5;
       };
@@ -341,9 +341,9 @@ rec {
         }).custom;
     in
       flag_sweep "vtr_rl" test {
-        place_reward_fun = ["basic" "nonPenalizing_basic" "runtime_aware" "WLbiased_runtime_aware"];
-        place_agent_algorithm = ["softmax" "e_greedy"];
-        inner_num = [0.1 0.2 0.3 0.5 0.8 1];
+        place_agent_multistate = ["on" "off"];
+        place_checkpointing = ["on" "off"];
+        inner_num = [0.5];
         seed = range 1 5;
       };
 
@@ -355,7 +355,7 @@ rec {
         }).vtr_reg_nightly.titan_quick_qor;
     in
       flag_sweep "titan_baseline" test {
-        inner_num = [0.2 0.25 0.5 0.75 1 1.5];
+        inner_num = [1];
         seed = range 1 3;
     };
 
@@ -368,7 +368,7 @@ rec {
     in
       flag_sweep "titan_random" test {
         place_static_move_prob = ["10 10 10 10 10 10 10"];
-        inner_num = [0.2 0.25 0.5 0.75 1 1.5];
+        inner_num = [0.5];
         seed = range 1 3;
     };
 
@@ -380,9 +380,9 @@ rec {
         }).vtr_reg_nightly.titan_quick_qor;
     in
       flag_sweep "titan_rl" test {
-        place_reward_fun = ["basic" "nonPenalizing_basic" "runtime_aware" "WLbiased_runtime_aware"];
-        inner_num = [0.1 0.2 0.3 0.5 0.8 1];
-        #place_agent_algorithm = ["softmax" "e_greedy"];
+        inner_num = [0.5];
+        place_agent_multistate = ["on" "off"];
+        place_checkpointing = ["on" "off"];
         seed = range 1 3;
     };
 
