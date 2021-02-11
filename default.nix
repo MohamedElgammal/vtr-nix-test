@@ -313,13 +313,13 @@ rec {
 
    vtr_baseline =
     let test = { flags, ...}: (mohameds_test {
-          flags = "--pack --place --RL_agent_placement off ${flags_to_string flags}";
+          flags = "--pack --place --route --RL_agent_placement off ${flags_to_string flags}";
           vtr = vtr_latest_master;
         }).custom;
     in
       flag_sweep "vtr_baseline" test {
         inner_num = [1];
-        seed = range 1 5;
+        seed = [1];
       };
 
    vtr_random =
@@ -336,27 +336,27 @@ rec {
 
     vtr_rl =
      let test = { flags, ...}: (mohameds_test {
-          flags = "--pack --place --RL_agent_placement on ${flags_to_string flags}";
+          flags = "--pack --place --route --RL_agent_placement on ${flags_to_string flags}";
           vtr = vtr_latest_master;
         }).custom;
     in
       flag_sweep "vtr_rl" test {
-        place_agent_multistate = ["on" "off"];
-        place_checkpointing = ["on" "off"];
+        #place_agent_multistate = ["on" "off"];
+        #place_checkpointing = ["on" "off"];
         inner_num = [0.5];
-        seed = range 1 5;
+        seed = [1];
       };
 
    titan_baseline =
     let test = {flags, ...}:
         (make_regression_tests {
             vtr = vtr_latest_master;
-            flags = "--pack --place --RL_agent_placement off  ${flags_to_string flags}";
+            flags = "--pack --place --route --RL_agent_placement off  ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
       flag_sweep "titan_baseline" test {
         inner_num = [1];
-        seed = range 1 3;
+        seed = [1];
     };
 
    titan_random =
@@ -376,14 +376,14 @@ rec {
     let test = {flags, ...}:
         (make_regression_tests {
             vtr = vtr_latest_master;
-            flags = "--pack --place --RL_agent_placement on  ${flags_to_string flags}";
+            flags = "--pack --place --route --RL_agent_placement on  ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
       flag_sweep "titan_rl" test {
         inner_num = [0.5];
-        place_agent_multistate = ["on" "off"];
-        place_checkpointing = ["on" "off"];
-        seed = range 1 3;
+        #place_agent_multistate = ["on" "off"];
+        #place_checkpointing = ["on" "off"];
+        seed = [1];
     };
 
 
