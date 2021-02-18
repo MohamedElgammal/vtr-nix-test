@@ -386,5 +386,22 @@ rec {
         seed = [1];
     };
 
+  vtr_hydra_test = vtrDerivation {
+    variant = "master_2dc5692";
+    url = "https://github.com/verilog-to-routing/vtr-verilog-to-routing.git";
+    ref = "master";
+    rev = "2dc5692e30f5e2e44c0bd9e3787bf13d68cb4adf";
+  };
+
+   hydra_test =
+    let test = { flags, ...}: (mohameds_test {
+          flags = "--pack --place  --RL_agent_placement off ${flags_to_string flags}";
+          vtr = vtr_hydra_test;
+        }).custom;
+    in
+      flag_sweep "vtr_hydra_test" test {
+        inner_num = [0.125 0.13 0.15 0.2];
+        seed = range 77 78;
+      };
 
 }
