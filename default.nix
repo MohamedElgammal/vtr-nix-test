@@ -311,6 +311,14 @@ rec {
     rev = "aec608ff60a0c01b3c93407b722684d810f04b23";
   };
 
+
+  vtr_db_private = vtrDerivation {
+    variant = "db_a78d";
+    url = "https://github.com/MohamedElgammal/db.git";
+    ref = "db";
+    rev = "a78df5d0ad61e712b3b4921a6cf2ba64d2fbfc46";
+  };
+
    vtr_baseline =
     let test = { flags, ...}: (mohameds_test {
           flags = "--pack --place --route --RL_agent_placement off ${flags_to_string flags}";
@@ -336,15 +344,14 @@ rec {
 
     vtr_rl =
      let test = { flags, ...}: (mohameds_test {
-          flags = "--pack --place --route --RL_agent_placement on ${flags_to_string flags}";
-          vtr = vtr_latest_master;
+          flags = "--pack --place --RL_agent_placement on ${flags_to_string flags}";
+          vtr = vtr_db_private;
         }).custom;
     in
-      flag_sweep "vtr_rl" test {
-        #place_agent_multistate = ["on" "off"];
-        #place_checkpointing = ["on" "off"];
-        inner_num = [0.5];
-        seed = [1];
+      flag_sweep "vtr_db_private" test {
+        place_delay_budget_algorithm = [0 1 2];
+        inner_num = [0.1 0.2 0.3 0.5 0.8 1];
+        seed = range 1 5;
       };
 
    titan_baseline =
@@ -375,33 +382,14 @@ rec {
    titan_rl =
     let test = {flags, ...}:
         (make_regression_tests {
-            vtr = vtr_latest_master;
-            flags = "--pack --place --route --RL_agent_placement on  ${flags_to_string flags}";
+            vtr = vtr_db_private;
+            flags = "--pack --place --RL_agent_placement on  ${flags_to_string flags}";
         }).vtr_reg_nightly.titan_quick_qor;
     in
       flag_sweep "titan_rl" test {
-        inner_num = [0.5];
-        #place_agent_multistate = ["on" "off"];
-        #place_checkpointing = ["on" "off"];
-        seed = [1];
+        place_delay_budget_algorithm = [0 1 2];
+        inner_num = [0.1 0.2 0.3 0.5 0.8 1];
+        seed = range 1 3;
     };
-
-  vtr_hydra_test = vtrDerivation {
-    variant = "master_2dc5692";
-    url = "https://github.com/verilog-to-routing/vtr-verilog-to-routing.git";
-    ref = "master";
-    rev = "2dc5692e30f5e2e44c0bd9e3787bf13d68cb4adf";
-  };
-
-   hydra_test =
-    let test = { flags, ...}: (mohameds_test {
-          flags = "--pack --place  --RL_agent_placement off ${flags_to_string flags}";
-          vtr = vtr_hydra_test;
-        }).custom;
-    in
-      flag_sweep "vtr_hydra_test" test {
-        inner_num = [0.125 0.13 0.15 0.2];
-        seed = range 77 78;
-      };
 
 }
